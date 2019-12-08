@@ -1,0 +1,36 @@
+@mixin font-roboto($weight: 400, $font-style: normal) {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-weight: $weight;
+  font-style: $font-style;
+}
+
+@mixin font-raleway($weight: 400, $font-style: normal) {
+  font-family: 'Raleway', 'Roboto', Arial, Helvetica, sans-serif;
+  font-weight: $weight;
+  font-style: $font-style;
+}
+
+@mixin font($font-family, $weight: 400, $font-style: normal) {
+  @if ($font-family == roboto) {
+    @include font-roboto($weight, $font-style);
+  }
+  else {
+    @include font-raleway($weight, $font-style);
+  }
+}
+
+@mixin app-text-font-family() {
+  @each $font-family in $font-families {
+    .app-text-#{$font-family} {
+      @include font($font-family);
+    }
+  }
+}
+
+@mixin app-text-font-weight() {
+  @each $font-weight in $font-weights {
+    .app-text-#{$font-weight} {
+      font-weight: $font-weight;
+    }
+  }
+}

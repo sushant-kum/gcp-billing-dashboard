@@ -1,0 +1,85 @@
+.app-theme-warn-l5 {
+  color: map-deep-get($mat-palette-warn, 'contrast', 50) !important;
+  background-color: map-get($mat-palette-warn, 50) !important;
+}
+
+.app-theme-warn-l4 {
+  color: map-deep-get($mat-palette-warn, 'contrast', 100) !important;
+  background-color: map-get($mat-palette-warn, 100) !important;
+}
+
+.app-theme-warn-l3 {
+  color: map-deep-get($mat-palette-warn, 'contrast', 200) !important;
+  background-color: map-get($mat-palette-warn, 200) !important;
+}
+
+.app-theme-warn-l2 {
+  color: map-deep-get($mat-palette-warn, 'contrast', 300) !important;
+  background-color: map-get($mat-palette-warn, 300) !important;
+}
+
+.app-theme-warn-l1 {
+  color: map-deep-get($mat-palette-warn, 'contrast', 400) !important;
+  background-color: map-get($mat-palette-warn, 400) !important;
+}
+
+.app-theme-warn-d1 {
+  color: map-deep-get($mat-palette-warn, 'contrast', 600) !important;
+  background-color: map-get($mat-palette-warn, 600) !important;
+}
+
+.app-theme-warn-d2 {
+  color: map-deep-get($mat-palette-warn, 'contrast', 700) !important;
+  background-color: map-get($mat-palette-warn, 700) !important;
+}
+
+.app-theme-warn-d3 {
+  color: map-deep-get($mat-palette-warn, 'contrast', 800) !important;
+  background-color: map-get($mat-palette-warn, 800) !important;
+}
+
+.app-theme-warn-d4 {
+  color: map-deep-get($mat-palette-warn, 'contrast', 900) !important;
+  background-color: map-get($mat-palette-warn, 900) !important;
+}
+
+.app-theme-warn-light {
+  color: map-deep-get($mat-palette-warn, 'contrast', 50) !important;
+  background-color: map-get($mat-palette-warn, 50) !important;
+}
+
+.app-theme-warn-dark {
+  color: map-deep-get($mat-palette-warn, 'contrast', 900) !important;
+  background-color: map-get($mat-palette-warn, 900) !important;
+}
+
+.app-theme-warn-action {
+  color: map-deep-get($mat-palette-warn, 'contrast', 900) !important;
+  background-color: map-get($mat-palette-warn, 900) !important;
+}
+
+.app-theme-warn {
+  color: map-deep-get($mat-palette-warn, 'contrast', 500) !important;
+  background-color: map-get($mat-palette-warn, 500) !important;
+}
+
+.app-text-theme-warn {
+  color: map-get($mat-palette-warn, 500) !important;
+}
+
+.app-border-theme-warn {
+  border-color: map-get($mat-palette-warn, 500) !important;
+}
+
+.app-hover-theme-warn:hover {
+  color: map-deep-get($mat-palette-warn, 'contrast', 500) !important;
+  background-color: map-get($mat-palette-warn, 500) !important;
+}
+
+.app-hover-text-theme-warn:hover {
+  color: map-get($mat-palette-warn, 500) !important;
+}
+
+.app-hover-border-theme-warn:hover {
+  border-color: map-get($mat-palette-warn, 500) !important;
+}

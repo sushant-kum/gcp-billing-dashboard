@@ -1,0 +1,7 @@
+@import './_variables.palette';
+@import './primary.palette';
+@import './accent.palette';
+@import './warn.palette';
+@import './mixins.palette.scss';
+
+@include ng-mat-palette();

@@ -24,11 +24,11 @@
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": [
-              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/librries/w3.css/4/s3.css",
+              "src/styles/index.scss"
             ],
             "scripts": []
           },

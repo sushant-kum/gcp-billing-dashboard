@@ -1,0 +1,89 @@
+/****************************************
+*               Scrollbar               *
+****************************************/
+
+*::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+}
+
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  background: #f5f5f5;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #616161;
+}
+
+/***************************************/
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  @include font-roboto();
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include font-raleway($weight: 500);
+}
+
+a:not(.mat-button):not(.mat-icon-button):not(.mat-raised-button) {
+  text-decoration: none;
+  position: relative;
+  color: map-get($mat-palette-primary, 500);
+
+  &:hover {
+    text-decoration: none;
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  &::after {
+    content: '';
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0%;
+    background: map-get($mat-palette-primary, 500);
+    transition: 0.2s;
+  }
+}
+
+.clr {
+  clear: both;
+}
+
+.toast-error .mat-simple-snackbar .mat-simple-snackbar-action .mat-button {
+  color: map-get($mat-palette-warn, 500) !important;
+}
+
+.content {
+  min-height: calc(100vh - 76px);
+  margin-left: 50px;
+  transition-property: margin;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+}
+
+.loading-indicator-spinner {
+  margin: 0 auto;
+}
+
+.app-card {
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}

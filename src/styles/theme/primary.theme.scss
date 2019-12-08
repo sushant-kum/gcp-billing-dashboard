@@ -1,0 +1,85 @@
+.app-theme-primary-l5 {
+  color: map-deep-get($mat-palette-primary, 'contrast', 50) !important;
+  background-color: map-get($mat-palette-primary, 50) !important;
+}
+
+.app-theme-primary-l4 {
+  color: map-deep-get($mat-palette-primary, 'contrast', 100) !important;
+  background-color: map-get($mat-palette-primary, 100) !important;
+}
+
+.app-theme-primary-l3 {
+  color: map-deep-get($mat-palette-primary, 'contrast', 200) !important;
+  background-color: map-get($mat-palette-primary, 200) !important;
+}
+
+.app-theme-primary-l2 {
+  color: map-deep-get($mat-palette-primary, 'contrast', 300) !important;
+  background-color: map-get($mat-palette-primary, 300) !important;
+}
+
+.app-theme-primary-l1 {
+  color: map-deep-get($mat-palette-primary, 'contrast', 400) !important;
+  background-color: map-get($mat-palette-primary, 400) !important;
+}
+
+.app-theme-primary-d1 {
+  color: map-deep-get($mat-palette-primary, 'contrast', 600) !important;
+  background-color: map-get($mat-palette-primary, 600) !important;
+}
+
+.app-theme-primary-d2 {
+  color: map-deep-get($mat-palette-primary, 'contrast', 700) !important;
+  background-color: map-get($mat-palette-primary, 700) !important;
+}
+
+.app-theme-primary-d3 {
+  color: map-deep-get($mat-palette-primary, 'contrast', 800) !important;
+  background-color: map-get($mat-palette-primary, 800) !important;
+}
+
+.app-theme-primary-d4 {
+  color: map-deep-get($mat-palette-primary, 'contrast', 900) !important;
+  background-color: map-get($mat-palette-primary, 900) !important;
+}
+
+.app-theme-primary-light {
+  color: map-deep-get($mat-palette-primary, 'contrast', 50) !important;
+  background-color: map-get($mat-palette-primary, 50) !important;
+}
+
+.app-theme-primary-dark {
+  color: map-deep-get($mat-palette-primary, 'contrast', 900) !important;
+  background-color: map-get($mat-palette-primary, 900) !important;
+}
+
+.app-theme-primary-action {
+  color: map-deep-get($mat-palette-primary, 'contrast', 900) !important;
+  background-color: map-get($mat-palette-primary, 900) !important;
+}
+
+.app-theme-primary {
+  color: map-deep-get($mat-palette-primary, 'contrast', 500) !important;
+  background-color: map-get($mat-palette-primary, 500) !important;
+}
+
+.app-text-theme-primary {
+  color: map-get($mat-palette-primary, 500) !important;
+}
+
+.app-border-theme-primary {
+  border-color: map-get($mat-palette-primary, 500) !important;
+}
+
+.app-hover-theme-primary:hover {
+  color: map-deep-get($mat-palette-primary, 'contrast', 500) !important;
+  background-color: map-get($mat-palette-primary, 500) !important;
+}
+
+.app-hover-text-theme-primary:hover {
+  color: map-get($mat-palette-primary, 500) !important;
+}
+
+.app-hover-border-theme-primary:hover {
+  border-color: map-get($mat-palette-primary, 500) !important;
+}

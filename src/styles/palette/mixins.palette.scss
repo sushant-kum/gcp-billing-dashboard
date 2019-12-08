@@ -1,0 +1,20 @@
+@import '../helper/index.helper';
+
+@mixin ng-mat-palette() {
+  @each $palette in $palettes {
+    @each $palette-weight in $palette-weights {
+      .ng-mat-palette-#{$palette}-#{$palette-weight} {
+        @if $palette == primary {
+          color: map-deep-get($mat-palette-primary, 'contrast', $palette-weight) !important;
+          background-color: map-get($mat-palette-primary, $palette-weight) !important;
+        } @else if $palette == accent {
+          color: map-deep-get($mat-palette-accent, 'contrast', $palette-weight) !important;
+          background-color: map-get($mat-palette-accent, $palette-weight) !important;
+        } @else if $palette == warn {
+          color: map-deep-get($mat-palette-warn, 'contrast', $palette-weight) !important;
+          background-color: map-get($mat-palette-warn, $palette-weight) !important;
+        }
+      }
+    }
+  }
+}
