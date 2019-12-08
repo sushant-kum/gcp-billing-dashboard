@@ -1,6 +1,6 @@
 {
   "name": "gcp-billing-dashboard",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "npm run version:info:gen && ng serve --host 0.0.0.0 --disableHostCheck --proxy-config proxy.conf.json",
