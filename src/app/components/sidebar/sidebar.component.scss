@@ -1,0 +1,222 @@
+#sidebar {
+  width: 200px;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  transition-property: left;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  // box-shadow: 0 46px 5px 0 rgba(0, 0, 0, 0.16), 0 46px 10px 0 rgba(0, 0, 0, 0.12);
+
+  &.sidebar-collapsed {
+    left: -200px;
+  }
+
+  #logo-holder {
+    z-index: 501;
+    height: 43px;
+
+    img {
+      height: 36px;
+    }
+  }
+
+  &-collapsed {
+    width: 50px;
+    top: 0;
+    left: 0;
+    z-index: 500;
+    // box-shadow: 0 46px 5px 0 rgba(0, 0, 0, 0.16), 0 46px 10px 0 rgba(0, 0, 0, 0.12);
+
+    #logo-holder-collapsed {
+      height: 43px;
+      z-index: 501;
+
+      img {
+        width: 34px;
+      }
+    }
+  }
+}
+
+#logout {
+  height: 33.6px;
+  width: 200px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 501;
+  transition-property: left;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+
+  #btn-logout {
+    width: 200px;
+    position: absolute;
+    top: calc(50% - 11px);
+    padding: 0 8px;
+    cursor: pointer;
+  }
+
+  &.sidebar-collapsed {
+    left: -150px;
+
+    &:hover {
+      left: 0;
+    }
+  }
+}
+
+#btn-sidebar-toggle {
+  position: fixed;
+  z-index: 500;
+  top: 74px;
+  left: 180px;
+  transition-property: left;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+
+  &.sidebar-collapsed {
+    left: 31px;
+  }
+
+  ::ng-deep.mat-button-wrapper {
+    padding: 0;
+  }
+}
+
+.bg-white {
+  background-color: #ffffff !important;
+}
+
+.hover-text-white {
+  &:hover {
+    color: #ffffff !important;
+  }
+}
+
+/* Hamburger */
+.hamburger {
+  padding: 10px;
+}
+
+.hamburger-box {
+  width: 20px;
+  height: 12px;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  background-color: #3f51b5;
+}
+
+.hamburger:hover,
+.hamburger.is-active:hover {
+  opacity: 1;
+}
+
+.hamburger:hover .hamburger-inner,
+.hamburger:hover .hamburger-inner::before,
+.hamburger:hover .hamburger-inner::after,
+.hamburger.is-active:hover .hamburger-inner,
+.hamburger.is-active:hover .hamburger-inner::before,
+.hamburger.is-active:hover .hamburger-inner::after {
+  background-color: #2d397f;
+}
+
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+  background-color: #3f51b5;
+}
+
+.hamburger-inner::before {
+  top: -5px;
+}
+
+.hamburger-inner::after {
+  bottom: -5px;
+}
+
+.hamburger--arrow.is-active .hamburger-inner::before {
+  transform: translate3d(-4px, 0, 0) rotate(-45deg) scale(0.7, 1);
+}
+
+.hamburger--arrow.is-active .hamburger-inner::after {
+  transform: translate3d(-4px, 0, 0) rotate(45deg) scale(0.7, 1);
+}
+
+/*********************
+Ripple
+**********************/
+.ripple-btn {
+  position: relative;
+}
+
+.c-ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+.c-ripple__circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.c-ripple.is-active .c-ripple__circle {
+  -webkit-animation: a-ripple 0.4s ease-in;
+  animation: a-ripple 0.4s ease-in;
+}
+
+/**
+  * Animation: Ripple
+  * --------------------------------------------------
+  */
+@-webkit-keyframes a-ripple {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    width: 200%;
+    padding-bottom: 200%;
+    opacity: 0;
+  }
+}
+
+@keyframes a-ripple {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    width: 200%;
+    padding-bottom: 200%;
+    opacity: 0;
+  }
+}

@@ -1,0 +1,56 @@
+@import 'src/styles/palette/_index.palette';
+
+.sub-head {
+  display: table;
+  text-align: left;
+  white-space: nowrap;
+
+  &:after {
+    content: '';
+    display: table-cell;
+    width: 100%;
+    background: linear-gradient(
+      transparent 50%,
+      currentColor 50%,
+      currentColor calc(50% + 2px),
+      transparent calc(50% + 2px)
+    );
+    background-clip: padding;
+    border-left: 1em solid transparent;
+  }
+
+  &-text {
+    padding-right: 4px;
+    text-transform: uppercase;
+  }
+
+  &.primary {
+    &::after {
+      color: map-get($mat-palette-primary, 500);
+    }
+
+    .sub-head-text {
+      color: map-get($mat-palette-primary, 500);
+    }
+  }
+
+  &.accent {
+    &::after {
+      color: map-get($mat-palette-accent, 500);
+    }
+
+    .sub-head-text {
+      color: map-get($mat-palette-accent, 500);
+    }
+  }
+
+  &.warn {
+    &::after {
+      color: map-get($mat-palette-warn, 500);
+    }
+
+    .sub-head-text {
+      color: map-get($mat-palette-warn, 500);
+    }
+  }
+}

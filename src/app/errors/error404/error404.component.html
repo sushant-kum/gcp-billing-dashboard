@@ -1,0 +1,45 @@
+<div class="content w3-padding-large w3-white">
+  <div class="w3-content">
+    <div id="not-found">
+      <div class="not-found">
+        <div class="not-found-404">
+          <h1 class="app-text-theme-accent w3-opacity-max">
+            404
+          </h1>
+        </div>
+        <h2 class="app-text-theme-primary">
+          Oops, The Page you are looking for couldn't be found!
+        </h2>
+        <form class="not-found-search">
+          <mat-form-field>
+            <input
+              type="text"
+              placeholder="Search Page"
+              aria-label="Search Page"
+              matInput
+              [formControl]="page_ctrl"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let page of filtered_pages | async" [value]="page.name">
+                <fa-icon icon="{{ page.fas_icon }}" class="app-text-theme-primary"></fa-icon>&nbsp;{{ page.name }}
+                <span class="w3-right w3-small app-text-theme-accent">{{ page.path }}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button type="button" mat-flat-button color="primary" [disabled]="!page_ctrl.value" (click)="goToPage()">
+            Go&nbsp;<fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+          </button>
+        </form>
+        <button mat-button color="primary" (click)="goBack()">
+          <fa-icon [icon]="['fas', 'arrow-left']"></fa-icon>
+          Go Back
+        </button>
+        <button mat-flat-button color="primary" routerLink="/home" class="w3-margin-left">
+          Go Home
+          <fa-icon [icon]="['fas', 'home']"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

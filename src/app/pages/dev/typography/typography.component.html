@@ -1,0 +1,45 @@
+<mat-card class="mat-elevation-z w3-margin-top">
+  <mat-card-header>
+    <img mat-card-avatar src="assets/images/icons/icon_typography.svg" />
+    <mat-card-title class="app-text-theme-primary">Typography</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="w3-padding-top-16 w3-padding-bottom-16">
+      <h4 class="app-text-theme-accent">Font Sizes</h4>
+
+      <div class="w3-margin-top w3-margin-bottom w3-padding w3-card w3-round" *ngFor="let font_size of font_size_list">
+        <h6 class="app-text-theme-primary app-text-600">{{ font_size.tag !== 'span' ? font_size.tag : 'default' }}</h6>
+        <div class="font-size-example" [innerHtml]="font_size.ex_inner_html"></div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="w3-padding-top-16">
+      <h4 class="app-text-theme-accent">Font Families</h4>
+      <h5 class="app-text-theme-primary">Roboto</h5>
+      <div
+        class="w3-margin-top w3-margin-bottom w3-padding w3-card w3-round"
+        *ngFor="let font_weight of font_weights.roboto"
+      >
+        <h6 class="app-text-theme-primary app-text-600">{{ font_weight.name }} ({{ font_weight.weight }})</h6>
+        <div [ngClass]="'app-text-' + font_weight.weight" [innerHTML]="test_str"></div>
+
+        <h6 class="app-text-theme-primary app-text-600">{{ font_weight.name }} ({{ font_weight.weight }}) italic</h6>
+        <div class="app-text-italic" [ngClass]="'app-text-' + font_weight.weight" [innerHTML]="test_str"></div>
+      </div>
+
+      <h5 class="app-text-theme-primary">Raleway</h5>
+      <div
+        class="w3-margin-top w3-margin-bottom w3-padding w3-card w3-round"
+        *ngFor="let font_weight of font_weights.raleway"
+      >
+        <h6 class="app-text-theme-primary app-text-600">{{ font_weight.name }} ({{ font_weight.weight }})</h6>
+        <div [ngClass]="'app-text-' + font_weight.weight" [innerHTML]="test_str"></div>
+
+        <h6 class="app-text-theme-primary app-text-600">{{ font_weight.name }} ({{ font_weight.weight }}) italic</h6>
+        <div class="app-text-italic" [ngClass]="'app-text-' + font_weight.weight" [innerHTML]="test_str"></div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

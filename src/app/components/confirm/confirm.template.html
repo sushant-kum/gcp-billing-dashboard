@@ -1,0 +1,22 @@
+<div mat-dialog-title class="dialog-title">
+  <button class="close-icon-button w3-large" mat-icon-button color="accent" (click)="onCloseClick()">
+    <fa-icon [icon]="['fas', 'times']"></fa-icon>
+  </button>
+  <h4 class="app-text-theme-primary">{{confirm_data.title}}</h4>
+</div>
+<div mat-dialog-content>
+  <div class="w3-margin-bottom" [innerHTML]="confirm_data.message"></div>
+  <div
+    *ngIf="confirm_data.info"
+    [innerHTML]="confirm_data.info"
+    class="w3-margin-bottom app-text-theme-accent w3-small"
+  ></div>
+</div>
+<div mat-dialog-actions class="w3-flex-right-align">
+  <button mat-button color="primary" class="w3-margin-right" (click)="onCancelClick()">
+    {{confirm_data.negative_btn_text}}
+  </button>
+  <button mat-flat-button color="primary" cdkFocusInitial (click)="onOkClick()">
+    {{confirm_data.positive_btn_text}}
+  </button>
+</div>

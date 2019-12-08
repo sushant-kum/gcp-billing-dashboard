@@ -1,0 +1,58 @@
+<div class="content w3-padding-large">
+  <div class="w3-content">
+    <mat-card class="card mat-elevation-z">
+      <div class="arch app-theme-primary w3-hide-small"></div>
+      <mat-card-content>
+        <div class="profile-ripple outer app-theme-primary-l1"></div>
+        <div class="profile-ripple inner app-theme-primary-l2"></div>
+        <div class="profile w3-white"></div>
+
+        <div class="card-space small w3-hide-medium w3-hide-large"></div>
+
+        <div class="card-content">
+          <div class="profile-name app-text-theme-primary w3-xlarge ">
+            Sushant Kumar
+          </div>
+          <div class="button-row">
+            <a
+              mat-icon-button
+              color="accent"
+              class="w3-large"
+              href="https://github.com/sushant-kum"
+              target="_blank"
+              aria-label="Github"
+            >
+              <fa-icon [icon]="['fab', 'github-alt']"></fa-icon>
+            </a>
+            <a
+              mat-icon-button
+              color="accent"
+              class="w3-large"
+              href="https://sushantk.com"
+              target="_blank"
+              aria-label="Website"
+            >
+              <fa-icon [icon]="['fas', 'globe']"></fa-icon>
+            </a>
+            <a
+              mat-icon-button
+              color="accent"
+              class="w3-large"
+              href="mailto:sushant.kum96@gmail.com"
+              target="_blank"
+              aria-label="E-Mail"
+            >
+              <fa-icon [icon]="['fas', 'envelope-open']"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="w3-margin-top">
+      <button mat-button color="primary" [routerLink]="['/', 'home']">
+        <fa-icon [icon]="['fas', 'arrow-left']"></fa-icon>&nbsp; Go Back to Home
+      </button>
+    </div>
+  </div>
+</div>

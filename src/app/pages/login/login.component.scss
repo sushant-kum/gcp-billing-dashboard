@@ -1,0 +1,48 @@
+@import 'src/styles/palette/_index.palette';
+@import 'src/styles/helper/_index.helper';
+
+.content {
+  margin: 0;
+  background: map-deep-get($mat-palette-primary, 500);
+  background: -webkit-linear-gradient(
+    -135deg,
+    map-deep-get($mat-palette-primary, 500),
+    map-deep-get($mat-palette-primary, 700)
+  );
+  background: -o-linear-gradient(
+    -135deg,
+    map-deep-get($mat-palette-primary, 500),
+    map-deep-get($mat-palette-primary, 700)
+  );
+  background: -moz-linear-gradient(
+    -135deg,
+    map-deep-get($mat-palette-primary, 500),
+    map-deep-get($mat-palette-primary, 700)
+  );
+  background: linear-gradient(
+    -135deg,
+    map-deep-get($mat-palette-primary, 500),
+    map-deep-get($mat-palette-primary, 700)
+  );
+}
+
+#logo-holder img {
+  width: 50%;
+}
+
+#login-form {
+  width: 100%;
+  height: auto;
+
+  &-holder {
+    min-height: calc(100vh - 140px);
+  }
+
+  img {
+    height: 36px;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}

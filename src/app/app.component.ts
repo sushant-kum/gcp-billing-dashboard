@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Config } from './configs/config';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'gcp-billing-dashboard';
+  config: Config = new Config();
+
+  constructor(private _title: Title) {
+    this._title.setTitle(this.config.app_title);
+  }
 }

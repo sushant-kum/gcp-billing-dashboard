@@ -1,0 +1,56 @@
+<div class="content w3-padding-large">
+  <div class="w3-content">
+    <mat-card class="mat-elevation-z">
+      <mat-card-header class="w3-padding-small">
+        <img mat-card-avatar src="assets/images/icons/icon_favorite.svg" />
+        <mat-card-title class="app-text-theme-primary">Favourite Apps</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="w3-light-grey w3-padding-large w3-round" *ngIf="bookmarked_apps.length == 0">
+          No favourite apps found. You can mark/unmark apps as favourite from below by clicking on&nbsp;
+          <fa-icon class="app-text-theme-accent" [icon]="['fas', 'heart']"></fa-icon>&nbsp; icon.
+        </div>
+        <div class="w3-row" *ngIf="bookmarked_apps.length != 0">
+          <div class="w3-col m3 w3-padding-small" *ngFor="let app of bookmarked_apps; let i = index">
+            <app-card-link [app]="app" (click)="sidebar.redirectTo(app.path, 400, true)"></app-card-link>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="w3-margin-top mat-elevation-z">
+      <mat-card-header class="w3-padding-small">
+        <img mat-card-avatar src="assets/images/icons/icon_apps.svg" />
+        <mat-card-title class="app-text-theme-primary">My Apps</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="w3-row">
+          <div class="w3-col m3 w3-padding-small" *ngFor="let app of my_apps; let i = index">
+            <div
+              [id]="app.identifier"
+              class="tile w3-card w3-white w3-round-small w3-padding-large w3-display-container app-text-theme-primary app-hover-theme-primary w3-hover-text-white w3-center w3-large"
+              (click)="sidebar.redirectTo(app.path, 400, true)"
+            >
+              <button mat-icon-button color="accent" class="tile-bookmark" (click)="toggleBookmarkApp(i, $event)">
+                <fa-icon
+                  class="app-text-theme-accent w3-hover-text-light-grey"
+                  [icon]="['fas', 'heart']"
+                  *ngIf="bookmarked_apps.indexOf(app) < 0"
+                ></fa-icon>
+                <fa-icon
+                  class="app-text-theme-warn w3-hover-text-light-grey"
+                  [icon]="['fas', 'heart']"
+                  *ngIf="bookmarked_apps.indexOf(app) >= 0"
+                ></fa-icon>
+              </button>
+              <div class="tile-text">
+                <fa-icon icon="{{ app.fas_icon }}"></fa-icon>
+                {{ app.short_name }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

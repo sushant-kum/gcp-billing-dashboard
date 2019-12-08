@@ -1,0 +1,14 @@
+<div
+  [id]="'icon-link-card-' + app.identifier"
+  class="tile w3-card w3-white w3-round w3-padding-large w3-display-container app-text-theme-primary app-hover-theme-primary w3-hover-text-white w3-center w3-large"
+  (mouseover)="onCardMouseOver()"
+  (mouseout)="onCardMouseOut()"
+>
+  <div class="tile-overlay"></div>
+  <img class="tile-icon" src="{{ app.img_icon_theme }}" [ngClass]="{ 'w3-hide': app.hovered }" />
+  <img class="tile-icon" src="{{ app.img_icon_white }}" [ngClass]="{ 'w3-hide': !app.hovered }" />
+  <div class="tile-text">
+    <fa-icon icon="{{ app.fas_icon }}" class="tile-text-icon"></fa-icon>
+    {{ app.short_name }}
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="content w3-container">
+  <div class="w3-content w3-padding w3-padding-32">
+    <div class="w3-card w3-round-large w3-white">
+      <div class="w3-row">
+        <div id="logo-holder" class="w3-col m5 w3-hide-small w3-display-container" [style.height.px]="col_height_px">
+          <img class="w3-margin w3-display-middle" src="assets/images/icon-color.svg" />
+        </div>
+        <div class="w3-col m1 w3-hide-small">&nbsp;</div>
+        <div id="login-form-holder" class="w3-col m6 w3-display-container" [style.height.px]="col_height_px">
+          <div id="login-form" class="w3-display-middle w3-padding-large w3-center">
+            <h3 class="app-text-theme-primary">
+              <img class="w3-hide-medium w3-hide-large" src="assets/images/icon-color.svg" />
+              Members Login
+            </h3>
+            <mat-form-field appearance="standard" class="w3-margin-top">
+              <mat-label>
+                Username
+              </mat-label>
+              <label matPrefix>
+                <fa-icon [icon]="['fas', 'user']" class="app-text-theme-primary"></fa-icon>&nbsp;
+              </label>
+              <input id="input-username" matInput [formControl]="username_ctrl" placeholder="Username" />
+              <mat-hint *ngIf="!username_ctrl.value">Enter your username.</mat-hint>
+              <mat-error *ngIf="username_ctrl.hasError('required')"> Username is <strong>required.</strong> </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="standard" class="w3-margin-bottom">
+              <mat-label>
+                Password
+              </mat-label>
+              <label matPrefix>
+                <fa-icon [icon]="['fas', 'key']" class="app-text-theme-primary"></fa-icon>&nbsp;
+              </label>
+              <input
+                id="input-password"
+                matInput
+                [type]="mode.password_visible ? 'text' : 'password'"
+                [formControl]="password_ctrl"
+                placeholder="Password"
+              />
+              <button mat-icon-button color="primary" matSuffix (click)="togglePasswordVisibility()">
+                <fa-icon [icon]="['fas', 'eye']" *ngIf="!mode.password_visible"></fa-icon>
+                <fa-icon [icon]="['fas', 'eye-slash']" *ngIf="mode.password_visible"></fa-icon>
+              </button>
+              <mat-hint *ngIf="!password_ctrl.value">Enter your password.</mat-hint>
+              <mat-error *ngIf="password_ctrl.hasError('required')"> Password is <strong>required.</strong> </mat-error>
+            </mat-form-field>
+            <button
+              mat-flat-button
+              color="primary"
+              class="w3-margin-top"
+              [disabled]="!loginFormValid() || mode.logging_in"
+              (click)="login()"
+            >
+              Login&nbsp;
+              <fa-icon [icon]="['fas', 'sign-in-alt']" *ngIf="!mode.logging_in"></fa-icon>
+              <fa-icon [icon]="['fas', 'circle-notch']" [spin]="true" *ngIf="mode.logging_in"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

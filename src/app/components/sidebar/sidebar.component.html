@@ -1,0 +1,67 @@
+<nav id="sidebar" class="w3-sidebar w3-bar-block app-theme-primary-d3 w3-show">
+  <div id="logo-holder" class="w3-white w3-padding-small">
+    <img src="assets/images/icon-full.png" />
+  </div>
+
+  <div
+    *ngFor="let page of config.pages"
+    [id]="'menu_' + config.page_map[page].identifier"
+    [attr.data-menuitem]="config.page_map[page].identifier"
+    class="menuitem w3-bar-item w3-button hover-text-white app-hover-theme-accent w3-padding-large ripple-btn"
+    [ngClass]="{
+      'w3-padding-left-16': !config.page_map[page].is_subpage,
+      'w3-padding-left-32 app-theme-primary-dark': config.page_map[page].is_subpage
+    }"
+    (click)="redirectTo(config.page_map[page].path, 400, true)"
+  >
+    <div class="c-ripple js-ripple">
+      <span class="c-ripple__circle"></span>
+    </div>
+    <fa-icon icon="{{ config.page_map[page].fas_icon }}"></fa-icon>
+    &nbsp;{{ config.page_map[page].short_name }}
+  </div>
+</nav>
+
+<nav id="sidebar-collapsed" class="w3-sidebar w3-bar-block app-theme-primary-d3 w3-hide">
+  <div id="logo-holder-collapsed" class="w3-white w3-padding-small">
+    <img src="assets/images/icon-color.svg" />
+  </div>
+
+  <div
+    *ngFor="let page of config.pages"
+    [id]="'menu_' + config.page_map[page].identifier"
+    [attr.data-menuitem]="config.page_map[page].identifier"
+    [matTooltip]="config.page_map[page].name"
+    matTooltipPosition="after"
+    class="menuitem w3-bar-item w3-button hover-text-white app-hover-theme-accent w3-padding-left-16 w3-padding-large ripple-btn"
+    [ngClass]="{ 'app-theme-primary-dark': config.page_map[page].is_subpage }"
+    (click)="redirectTo(config.page_map[page].path, 400, true)"
+  >
+    <div class="c-ripple js-ripple">
+      <span class="c-ripple__circle"></span>
+    </div>
+    <fa-icon icon="{{ config.page_map[page].fas_icon }}"></fa-icon>
+  </div>
+</nav>
+
+<div id="logout" class="app-theme-warn">
+  <div id="btn-logout" (click)="logout()">
+    Logout
+    <fa-icon [icon]="['fas', 'sign-out-alt']" class="w3-right"></fa-icon>
+  </div>
+</div>
+
+<button
+  id="btn-sidebar-toggle"
+  mat-mini-fab
+  color=""
+  (click)="toggleSidebarCollapse()"
+  [matTooltip]="getToggleButtonTooltipContent()"
+  matTooltipPosition="after"
+>
+  <div class="hamburger hamburger--arrow is-active">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+  </div>
+</button>

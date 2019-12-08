@@ -1,0 +1,12 @@
+<h6
+  class="sub-head"
+  [ngClass]="{
+    primary: color == 'primary',
+    accent: color == 'accent',
+    warn: color == 'warn'
+  }"
+>
+  <span class="sub-head-text w3-text-medium">
+    <ng-content></ng-content>
+  </span>
+</h6>

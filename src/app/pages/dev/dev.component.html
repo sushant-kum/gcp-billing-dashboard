@@ -1,0 +1,36 @@
+<div class="content w3-padding-large">
+  <mat-card class="mat-elevation-z w3-padding-small">
+    <mat-card-content>
+      <a mat-button color="primary" [routerLink]="['typography']" routerLinkActive="router-link-active">
+        <fa-icon [icon]="['fas', 'font']"></fa-icon>
+        &nbsp;Typography
+      </a>
+      <button mat-button color="primary" [matMenuTriggerFor]="menu" class="w3-margin-left">
+        <fa-icon [icon]="['fas', 'palette']"></fa-icon>
+        &nbsp;Palette&nbsp;
+        <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a
+          mat-menu-item
+          class="app-text-theme-primary"
+          [routerLink]="['palette', 'css']"
+          routerLinkActive="router-link-active"
+        >
+          <fa-icon [icon]="['fas', 'swatchbook']"></fa-icon>
+          &nbsp;App Palette
+        </a>
+        <a
+          mat-menu-item
+          class="app-text-theme-primary"
+          [routerLink]="['palette', 'ng-material']"
+          routerLinkActive="router-link-active"
+        >
+          <fa-icon [icon]="['fab', 'angular']"></fa-icon>
+          &nbsp;Angular Material
+        </a>
+      </mat-menu>
+    </mat-card-content>
+  </mat-card>
+  <router-outlet></router-outlet>
+</div>

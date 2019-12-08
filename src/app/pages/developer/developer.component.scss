@@ -1,0 +1,110 @@
+@media (max-width: 600px) {
+  .profile-ripple,
+  .profile {
+    top: 100px;
+    right: 50%;
+  }
+
+  .card-content .profile-name {
+    text-align: center;
+  }
+
+  .button-row {
+    text-align: center;
+  }
+}
+
+@media (min-width: 600px) {
+  .card {
+    min-height: 300px;
+  }
+
+  .profile-ripple,
+  .profile {
+    top: 100px;
+    right: 100px;
+  }
+}
+
+.arch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  border-radius: 4px;
+  clip-path: ellipse(300px 300px at 100% 0);
+}
+
+.profile-ripple,
+.profile {
+  position: absolute;
+  transform: translate(50%, -50%);
+  border-radius: 50%;
+}
+
+.profile {
+  width: 100px;
+  height: 100px;
+  background-image: url('src/assets/images/logo-square.png');
+  background-size: cover;
+
+  &-ripple {
+    &.outer {
+      width: 160px;
+      height: 160px;
+      animation-name: bubble-outer;
+      animation-duration: 1.5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+
+    &.inner {
+      width: 130px;
+      height: 130px;
+      animation-name: bubble-inner;
+      animation-duration: 1.5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      animation-delay: 300ms;
+    }
+  }
+}
+
+@keyframes bubble-outer {
+  0% {
+    height: 160px;
+    width: 160px;
+  }
+
+  50% {
+    height: 170px;
+    width: 170px;
+  }
+
+  100% {
+    height: 160px;
+    width: 160px;
+  }
+}
+
+@keyframes bubble-inner {
+  0% {
+    height: 130px;
+    width: 130px;
+  }
+
+  50% {
+    height: 140px;
+    width: 140px;
+  }
+
+  100% {
+    height: 130px;
+    width: 130px;
+  }
+}
+
+.card-space.small {
+  height: 184px;
+}

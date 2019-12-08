@@ -1,0 +1,16 @@
+<footer class="w3-dark-gray app-text-theme-accent w3-right-align w3-small w3-padding">
+  <span>
+    <fa-icon [icon]="['fas', 'copyright']"></fa-icon>&nbsp;{{ config.app_title }}&nbsp;2019
+    <span *ngIf="current_year > 2019">- {{ current_year }}</span>
+  </span>
+
+  <span class="version w3-margin-left w3-margin-right" [routerLink]="['/', 'app-info']">
+    <fa-icon [icon]="['fab', 'slack-hash']" flip="horizontal"></fa-icon>&nbsp;
+    <span class="w3-hide-small">Version</span>
+    {{ version_info.version }}
+  </span>
+
+  <span class="developer-link w3-text-gray app-hover-text-theme-accent">
+    <fa-icon [icon]="['fas', 'code']" [routerLink]="['/', 'developer']" routerLinkActive="router-link-active"></fa-icon>
+  </span>
+</footer>

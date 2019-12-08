@@ -1,0 +1,89 @@
+<mat-card class="mat-elevation-z w3-margin-top">
+  <mat-card-header>
+    <img mat-card-avatar src="assets/images/icons/icon_app_palette.svg" />
+    <mat-card-title class="app-text-theme-primary">App Colour Palette</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="w3-padding-top-16 w3-padding-bottom-16" *ngFor="let palette of palettes">
+      <h4 class="app-text-theme-accent">{{ palette.name }}</h4>
+
+      <div class="w3-margin-top w3-margin-bottom w3-padding w3-card w3-round">
+        <h6 class="app-text-theme-primary app-text-600">BG Colors</h6>
+        <div class="w3-row">
+          <div
+            class="w3-col s2 m1 w3-center w3-padding-small"
+            *ngFor="let color_level of color_levels[palette.id]; let i = index"
+          >
+            <div
+              class="color-swatch w3-round-large app-text-500 w3-tiny"
+              [ngClass]="'app-theme-' + palette.id + color_level.suffix"
+              [matTooltip]="color_level.css_classes"
+            >
+              <span class="color"> #{{ color_level.color_hex }} </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w3-margin-top w3-margin-bottom w3-padding w3-card w3-round">
+        <h6 class="app-text-theme-primary app-text-600">Others</h6>
+        <div class="w3-row">
+          <div class="w3-col s2 m1 w3-center w3-padding-small">
+            <div
+              class="color-swatch w3-round-large app-text-500 w3-tiny w3-border"
+              [ngClass]="'app-text-theme-' + palette.id"
+              [matTooltip]="'.app-text-theme-' + palette.id"
+            >
+              <span class="color"> Text Color </span>
+            </div>
+          </div>
+
+          <div class="w3-col s2 m1 w3-center w3-padding-small">
+            <div
+              class="color-swatch w3-round-large app-text-500 w3-tiny w3-border"
+              [ngClass]="'app-border-theme-' + palette.id"
+              [matTooltip]="'.app-border-theme-' + palette.id"
+            >
+              <span class="color"> Border Color </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w3-margin-top w3-margin-bottom w3-padding w3-card w3-round">
+        <h6 class="app-text-theme-primary app-text-600">On Hover</h6>
+        <div class="w3-row">
+          <div class="w3-col s2 m1 w3-center w3-padding-small">
+            <div
+              class="color-swatch w3-round-large app-text-500 w3-tiny w3-border"
+              [ngClass]="'app-hover-theme-' + palette.id"
+              [matTooltip]="'.app-hover-theme-' + palette.id"
+            >
+              <span class="color"> BG Color </span>
+            </div>
+          </div>
+
+          <div class="w3-col s2 m1 w3-center w3-padding-small">
+            <div
+              class="color-swatch w3-round-large app-text-500 w3-tiny w3-border"
+              [ngClass]="'app-hover-text-theme-' + palette.id"
+              [matTooltip]="'.app-hover-text-theme-' + palette.id"
+            >
+              <span class="color"> Text Color </span>
+            </div>
+          </div>
+
+          <div class="w3-col s2 m1 w3-center w3-padding-small">
+            <div
+              class="color-swatch w3-round-large app-text-500 w3-tiny w3-border"
+              [ngClass]="'app-hover-border-theme-' + palette.id"
+              [matTooltip]="'.app-hover-border-theme-' + palette.id"
+            >
+              <span class="color"> Border Color </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

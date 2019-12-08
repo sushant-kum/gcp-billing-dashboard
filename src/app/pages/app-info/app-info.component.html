@@ -1,0 +1,38 @@
+<div class="content w3-padding-large">
+  <div class="w3-content">
+    <mat-card class="mat-elevation-z">
+      <mat-card-header class="w3-padding-small">
+        <img mat-card-avatar src="assets/images/icons/icon_version.svg" />
+        <mat-card-title class="app-text-theme-primary">Version Info</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="w3-light-grey w3-round w3-row">
+          <div class="w3-col m6 w3-padding-large">
+            <span class="app-text-theme-primary w3-text-medium">Version</span>
+            &nbsp;{{ version_info.version }}
+          </div>
+          <div class="w3-col m6 w3-padding-large">
+            <span class="app-text-theme-primary w3-text-medium">Release Date</span>
+            &nbsp;{{ helper_service.time.format(version_info.release_date_time, 'DD MMM YYYY') }}
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="w3-margin-top mat-elevation-z">
+      <mat-card-header class="w3-padding-small">
+        <img mat-card-avatar src="assets/images/icons/icon_license.svg" />
+        <mat-card-title class="app-text-theme-primary">3rd Party Licenses</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="w3-padding-small w3-small" [innerHTML]="third_party_license"></div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="w3-margin-top">
+      <button mat-button color="primary" [routerLink]="['/', 'home']">
+        <fa-icon [icon]="['fas', 'arrow-left']"></fa-icon>&nbsp; Go Back to Home
+      </button>
+    </div>
+  </div>
+</div>

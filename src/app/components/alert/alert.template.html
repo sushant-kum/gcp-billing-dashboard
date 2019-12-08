@@ -1,0 +1,19 @@
+<div mat-dialog-title class="dialog-title">
+  <button class="close-icon-button w3-large" mat-icon-button color="accent" (click)="onCloseClick()">
+    <fa-icon [icon]="['fas', 'times']"></fa-icon>
+  </button>
+  <h4 class="app-text-theme-primary">{{alert_data.title}}</h4>
+</div>
+<div mat-dialog-content>
+  <div class="w3-margin-bottom" [innerHTML]="alert_data.message"></div>
+  <div
+    *ngIf="alert_data.info"
+    [innerHTML]="alert_data.info"
+    class="w3-margin-bottom app-text-theme-accent w3-small"
+  ></div>
+</div>
+<div mat-dialog-actions class="w3-flex-right-align">
+  <button mat-flat-button color="primary" cdkFocusInitial (click)="onOkClick()">
+    {{alert_data.positive_btn_text}}
+  </button>
+</div>
