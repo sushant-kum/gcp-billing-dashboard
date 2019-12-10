@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class LocalStorageService {
   private _lsname = {
-    user_id: '__liquipack_workflow.localstorage.user_id',
-    username: '__liquipack_workflow.localstorage.username',
-    token: '__liquipack_workflow.localstorage.token',
-    app_permissions: '__liquipack_workflow.localstorage.app_permissions'
+    user_id: '__billing_dashboard.localstorage.user_id',
+    username: '__billing_dashboard.localstorage.username',
+    token: '__billing_dashboard.localstorage.token',
+    app_permissions: '__billing_dashboard.localstorage.app_permissions'
   };
 
   constructor() {}

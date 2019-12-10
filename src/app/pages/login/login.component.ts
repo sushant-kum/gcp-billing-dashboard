@@ -33,8 +33,6 @@ export class LoginComponent implements OnInit {
     logging_in: false
   };
 
-  col_height_px: number;
-
   username_ctrl: FormControl = new FormControl(null, [Validators.required]);
   password_ctrl: FormControl = new FormControl(null, [Validators.required]);
 
@@ -54,8 +52,6 @@ export class LoginComponent implements OnInit {
       this.config.page_map.login.name,
       this.config.page_map.login.fas_icon
     );
-
-    this.col_height_px = document.getElementById('login-form-holder').offsetHeight;
 
     $('#input-username').on('keypress', e => {
       if (e.key === 'Enter') {

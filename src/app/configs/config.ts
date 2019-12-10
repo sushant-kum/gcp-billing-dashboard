@@ -1,5 +1,5 @@
 export class Config {
-  private _app_title = 'Liquipack Workflow';
+  private _app_title = 'Billing Dashboard';
   private _api_base_path = '/api';
   private _app_base_path = '';
   private _pages = ['login', 'home'];
