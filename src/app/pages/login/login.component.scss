@@ -23,6 +23,27 @@
 
 .content {
   margin: 0;
+  background: map-deep-get($mat-palette-primary, 100);
+  background: -webkit-linear-gradient(
+    135deg,
+    map-deep-get($mat-palette-primary, 100) 0%,
+    map-deep-get($mat-palette-primary-green, 100) 50%
+  );
+  background: -o-linear-gradient(
+    135deg,
+    map-deep-get($mat-palette-primary, 100) 0%,
+    map-deep-get($mat-palette-primary-green, 100) 50%
+  );
+  background: -moz-linear-gradient(
+    135deg,
+    map-deep-get($mat-palette-primary, 100) 0%,
+    map-deep-get($mat-palette-primary-green, 100) 50%
+  );
+  background: linear-gradient(
+    135deg,
+    map-deep-get($mat-palette-primary, 100) 0%,
+    map-deep-get($mat-palette-primary-green, 100) 50%
+  );
 }
 
 #login-card {
@@ -32,22 +53,22 @@
   background: -webkit-linear-gradient(
     135deg,
     map-deep-get($mat-palette-primary, 400) 0%,
-    map-deep-get($mat-palette-primary-green, 400) 70%
+    map-deep-get($mat-palette-primary-green, 400) 50%
   );
   background: -o-linear-gradient(
     135deg,
     map-deep-get($mat-palette-primary, 400) 0%,
-    map-deep-get($mat-palette-primary-green, 400) 70%
+    map-deep-get($mat-palette-primary-green, 400) 50%
   );
   background: -moz-linear-gradient(
     135deg,
     map-deep-get($mat-palette-primary, 400) 0%,
-    map-deep-get($mat-palette-primary-green, 400) 70%
+    map-deep-get($mat-palette-primary-green, 400) 50%
   );
   background: linear-gradient(
     135deg,
     map-deep-get($mat-palette-primary, 400) 0%,
-    map-deep-get($mat-palette-primary-green, 400) 70%
+    map-deep-get($mat-palette-primary-green, 400) 50%
   );
 
   #logo-holder {
