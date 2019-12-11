@@ -11,7 +11,7 @@ export class Config {
       short_name: 'Login',
       img_icon_theme: null,
       img_icon_white: null,
-      fas_icon: 'unlock-alt',
+      fa_icon: ['fas', 'unlock-alt'],
       is_subpage: false,
       parent_page: null
     },
@@ -22,7 +22,7 @@ export class Config {
       short_name: 'Home',
       img_icon_theme: 'assets/images/icons/apps/icon_home_theme.svg',
       img_icon_white: 'assets/images/icons/apps/icon_home_white.svg',
-      fas_icon: 'home',
+      fa_icon: ['fas', 'home'],
       is_subpage: false,
       parent_page: null
     }

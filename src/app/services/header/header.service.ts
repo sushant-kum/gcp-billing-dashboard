@@ -10,17 +10,17 @@ export class HeaderService {
   private _page_info: BehaviorSubject<PageInfo> = new BehaviorSubject({
     id: '',
     name: 'Loading App',
-    fas_icon: 'circle-notch'
+    fa_icon: ['fas', 'circle-notch']
   });
   current_page_info = this._page_info.asObservable();
 
   constructor() {}
 
-  changePageInfo(id: string, name: string, fas_icon: any) {
+  changePageInfo(id: string, name: string, fa_icon: string[]) {
     this._page_info.next({
       id,
       name,
-      fas_icon
+      fa_icon
     });
   }
 }

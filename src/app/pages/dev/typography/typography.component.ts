@@ -99,7 +99,7 @@ export class TypographyComponent implements OnInit {
 
   ngOnInit() {
     this._title.setTitle('Typography - Developers Page - ' + this.config.app_title);
-    this._header_service.changePageInfo('typography', 'Typography', 'font');
+    this._header_service.changePageInfo('typography', 'Typography', ['fas', 'font']);
 
     for (const tag of this.font_size_tags) {
       this.font_size_list.push({

@@ -22,7 +22,7 @@ export class DeveloperComponent implements OnInit {
 
   ngOnInit() {
     this._title.setTitle('About the Developer' + ' - ' + this.config.app_title);
-    this._header_service.changePageInfo('developer', 'About the Developer', 'code');
+    this._header_service.changePageInfo('developer', 'About the Developer', ['fas', 'code']);
 
     this._sidebar.colorize();
   }

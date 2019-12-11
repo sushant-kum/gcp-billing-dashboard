@@ -62,7 +62,7 @@ export class PaletteNgMaterialComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this._title.setTitle('Angular Material Palette - Developers Page - ' + this.config.app_title);
-    this._header_service.changePageInfo('palette-ng-material', 'Angular Material Palette', 'layer-group');
+    this._header_service.changePageInfo('palette-ng-material', 'Angular Material Palette', ['fab', 'angular']);
 
     for (const color_suffix of COLOR_LEVEL_SUFFIXES) {
       for (const palette of this.palettes) {

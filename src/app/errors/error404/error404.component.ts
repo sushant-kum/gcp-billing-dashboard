@@ -20,7 +20,7 @@ interface Page {
   name: string;
   value: string;
   path: string;
-  fas_icon: string;
+  fa_icon: string[];
 }
 
 @Component({
@@ -45,7 +45,7 @@ export class Error404Component implements OnInit {
 
   ngOnInit() {
     this._title.setTitle('Error 404 - ' + this.config.app_title);
-    this._header_service.changePageInfo('error404', 'Error 404', 'exclamation-circle');
+    this._header_service.changePageInfo('error404', 'Error 404', ['fas', 'exclamation-circle']);
 
     this._sidebar.activate();
     this._sidebar.colorize();
@@ -56,7 +56,7 @@ export class Error404Component implements OnInit {
           name: this.config.page_map[page].short_name,
           value: this.config.page_map[page].identifier,
           path: this.config.page_map[page].path,
-          fas_icon: this.config.page_map[page].fas_icon
+          fa_icon: this.config.page_map[page].fa_icon
         });
       }
     }

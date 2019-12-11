@@ -22,7 +22,7 @@
             />
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
               <mat-option *ngFor="let page of filtered_pages | async" [value]="page.name">
-                <fa-icon icon="{{ page.fas_icon }}" class="app-text-theme-primary"></fa-icon>&nbsp;{{ page.name }}
+                <fa-icon [icon]="page.fa_icon" class="app-text-theme-primary"></fa-icon>&nbsp;{{ page.name }}
                 <span class="w3-right w3-small app-text-theme-accent">{{ page.path }}</span>
               </mat-option>
             </mat-autocomplete>

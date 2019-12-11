@@ -36,7 +36,7 @@ export class AppInfoComponent implements OnInit {
 
   ngOnInit() {
     this._title.setTitle('App Info' + ' - ' + this.config.app_title);
-    this._header_service.changePageInfo('app-info', 'App Info', 'layer-group');
+    this._header_service.changePageInfo('app-info', 'App Info', ['fas', 'layer-group']);
 
     this._sidebar.colorize();
 

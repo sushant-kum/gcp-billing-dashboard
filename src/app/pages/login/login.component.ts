@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     this._header_service.changePageInfo(
       this.config.page_map.login.identifier,
       this.config.page_map.login.name,
-      this.config.page_map.login.fas_icon
+      this.config.page_map.login.fa_icon
     );
 
     $('#input-username').on('keypress', e => {

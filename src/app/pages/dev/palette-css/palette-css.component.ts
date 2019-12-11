@@ -48,7 +48,7 @@ export class PaletteCssComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this._title.setTitle('App Palette - Developers Page - ' + this.config.app_title);
-    this._header_service.changePageInfo('palette-app', 'App Palette', 'swatchbook');
+    this._header_service.changePageInfo('palette-app', 'App Palette', ['fas', 'swatchbook']);
 
     for (const color_suffix of COLOR_LEVEL_SUFFIXES) {
       for (const palette of this.palettes) {
