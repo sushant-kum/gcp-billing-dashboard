@@ -28,7 +28,7 @@ export class DevComponent implements OnInit {
 
   ngOnInit() {
     this._title.setTitle('Developers Page' + ' - ' + this.config.app_title);
-    this._header_service.changePageInfo('dev', 'Developers Page', 'file-code');
+    this._header_service.changePageInfo('dev', 'Developers Page', ['fas', 'file-code']);
 
     this._sidebar.colorize();
   }

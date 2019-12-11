@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class CookieService {
   private _cname = {
-    sidebar_collapsed: '__liquipack_workflow.cookie.sidebar_collapsed',
-    bookmarked_apps: '__liquipack_workflow.cookie.bookmarked_apps'
+    sidebar_collapsed: '__billing_dashboard.cookie.sidebar_collapsed',
+    bookmarked_apps: '__billing_dashboard.cookie.bookmarked_apps'
   };
 
   constructor() {}

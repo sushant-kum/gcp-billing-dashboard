@@ -13,7 +13,7 @@ export class CardLinkComponent implements OnInit {
     short_name: string;
     img_icon_theme: string;
     img_icon_white: string;
-    fas_icon: string;
+    fa_icon: string[];
     hovered: boolean;
   };
 

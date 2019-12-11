@@ -1,5 +1,5 @@
 export interface PageInfo {
   id: string;
   name: string;
-  fas_icon: string;
+  fa_icon: string[];
 }

@@ -30,7 +30,7 @@ interface PageMapWithHover {
   short_name: string;
   img_icon_theme: string;
   img_icon_white: string;
-  fas_icon: string;
+  fa_icon: string[];
   hovered: boolean;
 }
 
@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
     this._header_service.changePageInfo(
       this.config.page_map[this._page_id].identifier,
       this.config.page_map[this._page_id].name,
-      this.config.page_map[this._page_id].fas_icon
+      this.config.page_map[this._page_id].fa_icon
     );
 
     this.sidebar.activate();

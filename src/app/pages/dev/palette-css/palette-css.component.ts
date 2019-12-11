@@ -28,15 +28,18 @@ export class PaletteCssComponent implements OnInit, AfterViewChecked {
 
   readonly palettes = [
     { id: 'primary', name: 'Primary' },
+    { id: 'primary-green', name: 'Primary Green' },
     { id: 'accent', name: 'Accent' },
     { id: 'warn', name: 'Warn' }
   ];
   readonly color_levels: {
     primary: ColorLevel[];
+    'primary-green': ColorLevel[];
     accent: ColorLevel[];
     warn: ColorLevel[];
   } = {
     primary: [],
+    'primary-green': [],
     accent: [],
     warn: []
   };
@@ -45,7 +48,7 @@ export class PaletteCssComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this._title.setTitle('App Palette - Developers Page - ' + this.config.app_title);
-    this._header_service.changePageInfo('palette-app', 'App Palette', 'swatchbook');
+    this._header_service.changePageInfo('palette-app', 'App Palette', ['fas', 'swatchbook']);
 
     for (const color_suffix of COLOR_LEVEL_SUFFIXES) {
       for (const palette of this.palettes) {
