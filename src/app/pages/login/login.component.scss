@@ -7,7 +7,7 @@
     .arch {
       // width: 150px !important;
       // height: 100px !important;
-      // clip-path: ellipse(150px 200px at 0 50%) !important;
+      // clip-path: ellipse(150px 200px at 0 70%) !important;
       position: none;
     }
   }
@@ -23,27 +23,29 @@
 
 .content {
   margin: 0;
-  background: map-deep-get($mat-palette-primary, 100);
-  background: -webkit-linear-gradient(
-    135deg,
-    map-deep-get($mat-palette-primary, 100) 0%,
-    map-deep-get($mat-palette-primary-green, 100) 50%
-  );
-  background: -o-linear-gradient(
-    135deg,
-    map-deep-get($mat-palette-primary, 100) 0%,
-    map-deep-get($mat-palette-primary-green, 100) 50%
-  );
-  background: -moz-linear-gradient(
-    135deg,
-    map-deep-get($mat-palette-primary, 100) 0%,
-    map-deep-get($mat-palette-primary-green, 100) 50%
-  );
-  background: linear-gradient(
-    135deg,
-    map-deep-get($mat-palette-primary, 100) 0%,
-    map-deep-get($mat-palette-primary-green, 100) 50%
-  );
+  // background: map-deep-get($mat-palette-primary, 50);
+  // background: -webkit-linear-gradient(
+  //   135deg,
+  //   map-deep-get($mat-palette-primary, 50) 0%,
+  //   map-deep-get($mat-palette-primary-green, 50) 70%
+  // );
+  // background: -o-linear-gradient(
+  //   135deg,
+  //   map-deep-get($mat-palette-primary, 50) 0%,
+  //   map-deep-get($mat-palette-primary-green, 50) 70%
+  // );
+  // background: -moz-linear-gradient(
+  //   135deg,
+  //   map-deep-get($mat-palette-primary, 50) 0%,
+  //   map-deep-get($mat-palette-primary-green, 50) 70%
+  // );
+  // background: linear-gradient(
+  //   135deg,
+  //   map-deep-get($mat-palette-primary, 50) 0%,
+  //   map-deep-get($mat-palette-primary-green, 50) 70%
+  // );
+  background: url('src/assets/images/bg.min.jpg') !important;
+  background-size: cover;
 }
 
 #login-card {
@@ -53,22 +55,22 @@
   background: -webkit-linear-gradient(
     135deg,
     map-deep-get($mat-palette-primary, 400) 0%,
-    map-deep-get($mat-palette-primary-green, 400) 50%
+    map-deep-get($mat-palette-primary-green, 400) 70%
   );
   background: -o-linear-gradient(
     135deg,
     map-deep-get($mat-palette-primary, 400) 0%,
-    map-deep-get($mat-palette-primary-green, 400) 50%
+    map-deep-get($mat-palette-primary-green, 400) 70%
   );
   background: -moz-linear-gradient(
     135deg,
     map-deep-get($mat-palette-primary, 400) 0%,
-    map-deep-get($mat-palette-primary-green, 400) 50%
+    map-deep-get($mat-palette-primary-green, 400) 70%
   );
   background: linear-gradient(
     135deg,
     map-deep-get($mat-palette-primary, 400) 0%,
-    map-deep-get($mat-palette-primary-green, 400) 50%
+    map-deep-get($mat-palette-primary-green, 400) 70%
   );
 
   #logo-holder {
