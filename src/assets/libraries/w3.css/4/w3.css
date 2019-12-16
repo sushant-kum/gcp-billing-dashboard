@@ -1,4 +1,4 @@
-/* W3.CSS 4.12 November 2018 by Jan Egil and Borge Refsnes */
+/* W3.CSS 4.10 February 2018 by Jan Egil and Borge Refsnes */
 html {
   box-sizing: border-box;
 }
@@ -182,7 +182,6 @@ textarea {
 /* End extract */
 html,
 body {
-  font-family: Verdana, sans-serif;
   font-size: 15px;
   line-height: 1.5;
 }
@@ -216,7 +215,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Segoe UI', Arial, sans-serif;
   font-weight: 400;
   margin: 10px 0;
 }
@@ -916,7 +914,7 @@ a {
 }
 .w3-card,
 .w3-card-2 {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
 }
 .w3-card-4,
 .w3-hover-shadow:hover {
@@ -1155,6 +1153,9 @@ a {
 .w3-margin-right {
   margin-right: 16px !important;
 }
+.w3-margin-0 {
+  margin: 0 !important;
+}
 .w3-padding-small {
   padding: 4px 8px !important;
 }
@@ -1182,6 +1183,69 @@ a {
 }
 .w3-padding-64 {
   padding-top: 64px !important;
+  padding-bottom: 64px !important;
+}
+.w3-padding-0 {
+  padding: 0 !important;
+}
+.w3-padding-left-16 {
+  padding-left: 16px !important;
+}
+.w3-padding-left-24 {
+  padding-left: 24px !important;
+}
+.w3-padding-left-32 {
+  padding-left: 32px !important;
+}
+.w3-padding-left-48 {
+  padding-left: 48px !important;
+}
+.w3-padding-left-64 {
+  padding-left: 64px !important;
+}
+.w3-padding-right-16 {
+  padding-right: 16px !important;
+}
+.w3-padding-right-24 {
+  padding-right: 24px !important;
+}
+.w3-padding-right-32 {
+  padding-right: 32px !important;
+}
+.w3-padding-right-48 {
+  padding-right: 48px !important;
+}
+.w3-padding-right-64 {
+  padding-right: 64px !important;
+}
+.w3-padding-top-16 {
+  padding-top: 16px !important;
+}
+.w3-padding-top-24 {
+  padding-top: 24px !important;
+}
+.w3-padding-top-32 {
+  padding-top: 32px !important;
+}
+.w3-padding-top-48 {
+  padding-top: 48px !important;
+}
+.w3-padding-top-64 {
+  padding-top: 64px !important;
+}
+.w3-padding-bottom-16 {
+  padding-bottom: 16px !important;
+}
+.w3-padding-bottom-24 {
+  padding-bottom: 24px !important;
+}
+.w3-padding-bottom-32 {
+  padding-bottom: 32px !important;
+}
+.w3-padding-bottom-48 {
+  padding-bottom: 48px !important;
+}
+.w3-padding-bottom-64 {
   padding-bottom: 64px !important;
 }
 .w3-left {
@@ -1599,4 +1663,39 @@ a {
 .w3-border-pale-blue,
 .w3-hover-border-pale-blue:hover {
   border-color: #e7ffff !important;
+}
+
+/* Custom */
+.w3-text-thin {
+  font-weight: 100;
+}
+.w3-text-light {
+  font-weight: 300;
+}
+.w3-text-normal {
+  font-weight: 400;
+}
+.w3-text-medium {
+  font-weight: 500;
+}
+.w3-text-semi-bold {
+  font-weight: 600;
+}
+.w3-text-bold {
+  font-weight: 700;
+}
+.w3-text-extra-bold {
+  font-weight: 800;
+}
+.w3-text-black {
+  font-weight: 900;
+}
+.w3-line-height-1 {
+  line-height: 1;
+}
+.w3-flex-right-align {
+  justify-content: flex-end;
+}
+.w3-vertical-align-middle {
+  vertical-align: middle !important;
 }

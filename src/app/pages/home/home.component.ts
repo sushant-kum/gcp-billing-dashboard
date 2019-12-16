@@ -18,11 +18,6 @@ import { Config } from 'src/app/configs/config';
 
 const PAGE_ID = 'home';
 
-interface Mode {
-  password_visible: boolean;
-  logging_in: boolean;
-}
-
 interface PageMapWithHover {
   path: string;
   identifier: string;
@@ -42,11 +37,6 @@ interface PageMapWithHover {
 export class HomeComponent implements OnInit {
   private _page_id = PAGE_ID;
   config: Config = new Config();
-
-  mode: Mode = {
-    password_visible: false,
-    logging_in: false
-  };
 
   bookmarked_apps: PageMapWithHover[] = [];
   my_apps: PageMapWithHover[] = [];

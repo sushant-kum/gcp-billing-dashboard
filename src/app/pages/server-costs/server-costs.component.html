@@ -1,0 +1,20 @@
+<div class="content w3-padding-large">
+  <div class="w3-content">
+    <mat-card class="mat-elevation-z">
+      <mat-card-header class="w3-padding-small">
+        <img mat-card-avatar src="assets/images/icons/icon_server.svg" />
+        <mat-card-title class="app-text-theme-primary">Server Costs</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="w3-light-grey w3-padding-large w3-round" *ngIf="apps.length == 0">
+          No apps are available to you in this section.
+        </div>
+        <div class="w3-row" *ngIf="apps.length != 0">
+          <div class="w3-col m3 w3-padding-small" *ngFor="let app of apps; let i = index">
+            <app-card-link [app]="app" (click)="sidebar.redirectTo(app.path, 400, true)"></app-card-link>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

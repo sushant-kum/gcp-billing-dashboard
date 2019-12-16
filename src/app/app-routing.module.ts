@@ -16,6 +16,11 @@ const routes: Routes = [
     loadChildren: () => import('src/app/pages/home/home.module').then(module => module.HomeModule)
   },
   {
+    path: 'server-costs',
+    loadChildren: () =>
+      import('src/app/pages/server-costs/server-costs.module').then(module => module.ServerCostsModule)
+  },
+  {
     path: 'app-info',
     loadChildren: () => import('src/app/pages/app-info/app-info.module').then(module => module.AppInfoModule)
   },
