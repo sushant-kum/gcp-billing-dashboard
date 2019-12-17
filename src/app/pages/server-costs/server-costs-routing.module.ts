@@ -7,6 +7,13 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     component: ServerCostsComponent
+  },
+  {
+    path: 'reports',
+    loadChildren: () =>
+      import('src/app/pages/server-costs/server-costs-reports/server-costs-reports.module').then(
+        module => module.ServerCostsReportsModule
+      )
   }
 ];
 
