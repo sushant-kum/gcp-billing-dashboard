@@ -8,9 +8,8 @@ describe('ServerCostsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServerCostsComponent ]
-    })
-    .compileComponents();
+      declarations: [ServerCostsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
