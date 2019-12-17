@@ -1,3 +1,82 @@
 <div class="content w3-padding-large">
-  server-costs-reports works!
+  <div class="w3-row">
+    <div class="w3-col m9 w3-padding-small">
+      <div class="w3-row">
+        <div class="w3-col m6 w3-padding-small">
+          <mat-card class="mat-elevation-z">
+            <mat-card-content>
+              KPI
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <!-- <div class="w3-col m6 w3-padding-small">
+          <mat-card class="mat-elevation-z">
+            <mat-card-content>
+              asd
+            </mat-card-content>
+          </mat-card>
+        </div> -->
+
+        <div class="w3-col m12 w3-padding-small">
+          <mat-card class="mat-elevation-z">
+            <mat-card-header class="w3-padding-small">
+              <mat-card-title class="app-text-theme-primary">Trends</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              asd
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col m3 w3-padding-small">
+      <mat-card class="mat-elevation-z">
+        <mat-card-header class="w3-padding-small">
+          <mat-card-title class="app-text-theme-primary">Filters</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="form_filters">
+            <mat-form-field>
+              <mat-label>
+                <fa-icon [icon]="['fas', 'arrows-alt-h']"></fa-icon>
+                &nbsp;Duration
+              </mat-label>
+              <mat-select formControlName="duration">
+                <mat-option value="current_month">
+                  Current Month
+                </mat-option>
+                <mat-option value="last_month">
+                  Last Month
+                </mat-option>
+                <mat-divider></mat-divider>
+                <mat-option value="last_30_days">
+                  Last 30 Days
+                </mat-option>
+                <mat-option value="last_90_days">
+                  Last 90 Days
+                </mat-option>
+                <mat-option value="year_to_date">
+                  Year to Date
+                </mat-option>
+                <mat-divider></mat-divider>
+                <mat-option value="custom">
+                  Custom Range
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>
+                <fa-icon [icon]="['fas', 'calendar-day']"></fa-icon>
+                &nbsp;From
+              </mat-label>
+              <input matInput [matDatepicker]="duration_start_datepicker" formControlName="duration_start" />
+              <mat-datepicker-toggle matSuffix [for]="duration_start_datepicker"></mat-datepicker-toggle>
+              <mat-datepicker #duration_start_datepicker></mat-datepicker>
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>
