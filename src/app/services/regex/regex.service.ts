@@ -9,7 +9,6 @@ export class RegexService {
   private _quotation_num: RegExp = /^(?=.{2,50}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+[a-zA-Z0-9]$/;
   private _quotation_config_name: RegExp = /^(?=.{2,50}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+[a-zA-Z0-9]$/;
   private _price: RegExp = /^(\-?(\d+\.?\d{0,9}|\d*\.?\d{1,9}))?$/;
-  private _date_dd_mmm_yyyy: RegExp = /^(([0-2][0-9])|([3][0-1])) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec), \d{4}$/;
 
   constructor() {}
 
@@ -31,9 +30,5 @@ export class RegexService {
 
   get price(): RegExp {
     return this._price;
-  }
-
-  get date_dd_mmm_yyyy(): RegExp {
-    return this._date_dd_mmm_yyyy;
   }
 }

@@ -13,7 +13,11 @@ import { MatInputModule } from '@angular/material/input';
 /* Fontawesome Imports */
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 /* Solid Icons */
-import { faArrowsAltH as fasArrowsAltH, faCalendarDay as fasCalendarDay } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowsAltH as fasArrowsAltH,
+  faCalendarDay as fasCalendarDay,
+  faObjectGroup as fasObjectGroup
+} from '@fortawesome/free-solid-svg-icons';
 /* Regular Icons */
 import {} from '@fortawesome/free-regular-svg-icons';
 /* Brand Icons */
@@ -47,7 +51,7 @@ import { ServerCostsReportsComponent } from './server-costs-reports.component';
 export class ServerCostsReportsModule {
   constructor(fa_icon_library: FaIconLibrary) {
     // Include solid fa icons
-    fa_icon_library.addIcons(fasArrowsAltH, fasCalendarDay);
+    fa_icon_library.addIcons(fasArrowsAltH, fasCalendarDay, fasObjectGroup);
     // Include regular fa icons
     // Include brand fa icons
   }

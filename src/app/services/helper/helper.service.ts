@@ -6,7 +6,10 @@ import * as equal from 'fast-deep-equal';
   providedIn: 'root'
 })
 export class HelperService {
+  moment = moment;
+
   constructor() {}
+
   time = {
     format(date: moment.Moment | Date, format: string): string {
       return moment(date).format(format);

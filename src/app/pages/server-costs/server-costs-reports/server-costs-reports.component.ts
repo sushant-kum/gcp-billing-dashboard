@@ -3,22 +3,18 @@ import { Title } from '@angular/platform-browser';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-
-import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
-import { default as _rollupMoment } from 'moment';
+import * as moment from 'moment';
 
 /* Component Imports */
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 
 /* Services Imports */
 import { HeaderService } from 'src/app/services/header/header.service';
-import { RegexService } from 'src/app/services/regex/regex.service';
+import { ValidatorService } from 'src/app/services/validator.service';
+import { HelperService } from 'src/app/services/helper/helper.service';
 
 /* Config Imports */
 import { Config } from 'src/app/configs/config';
-
-const moment = _rollupMoment || _moment;
 
 export const DATE_PICKER_FORMATS = {
   parse: {
@@ -54,15 +50,18 @@ export class ServerCostsReportsComponent implements OnInit {
 
   form_filters: FormGroup = new FormGroup({
     duration: new FormControl('current_month', [Validators.required]),
-    duration_start: new FormControl(moment(), [Validators.pattern(this._regex_service.date_dd_mmm_yyyy)]),
-    duration_end: new FormControl(moment(), [Validators.pattern(this._regex_service.date_dd_mmm_yyyy)]),
-    group_by: new FormControl()
+    duration_start: new FormControl(moment().date(1), [this._validator_service.moment('DD MMM, YYYY')]),
+    duration_end: new FormControl(moment().date(moment().daysInMonth()), [
+      this._validator_service.moment('DD MMM, YYYY')
+    ]),
+    group_by: new FormControl('product', [Validators.required])
   });
 
   constructor(
     private _title: Title,
     private _header_service: HeaderService,
-    private _regex_service: RegexService,
+    private _validator_service: ValidatorService,
+    public helper_service: HelperService,
     public sidebar: SidebarComponent
   ) {}
 
@@ -76,5 +75,59 @@ export class ServerCostsReportsComponent implements OnInit {
 
     this.sidebar.activate();
     this.sidebar.colorize(this.config.page_map[this._page_id].identifier);
+
+    this.form_filters.get('duration').valueChanges.subscribe(() => {
+      this.fetchTrendsData();
+    });
+    this.form_filters.get('duration_start').valueChanges.subscribe(() => {
+      this.fetchTrendsData();
+    });
+    this.form_filters.get('duration_end').valueChanges.subscribe(() => {
+      this.fetchTrendsData();
+    });
+    this.form_filters.get('group_by').valueChanges.subscribe(() => {
+      this.fetchTrendsData();
+    });
+  }
+
+  fetchTrendsData(): void {
+    switch (this.form_filters.get('duration').value) {
+      case 'current_month':
+        this.form_filters.get('duration_start').setValue(moment().date(1));
+        this.form_filters.get('duration_end').setValue(moment().date(moment().daysInMonth()));
+        break;
+      case 'last_month':
+        this.form_filters.get('duration_start').setValue(
+          moment()
+            .subtract(1, 'month')
+            .date(1)
+        );
+        this.form_filters.get('duration_end').setValue(
+          moment()
+            .subtract(1, 'month')
+            .date(
+              moment()
+                .subtract(1, 'month')
+                .daysInMonth()
+            )
+        );
+        break;
+      case 'last_30_days':
+        this.form_filters.get('duration_start').setValue(moment().subtract(30, 'days'));
+        this.form_filters.get('duration_end').setValue(moment());
+        break;
+      case 'last_90_days':
+        this.form_filters.get('duration_start').setValue(moment().subtract(90, 'days'));
+        this.form_filters.get('duration_end').setValue(moment());
+        break;
+      case 'year_to_date':
+        this.form_filters.get('duration_start').setValue(
+          moment()
+            .month(0)
+            .date(1)
+        );
+        this.form_filters.get('duration_end').setValue(moment());
+        break;
+    }
   }
 }

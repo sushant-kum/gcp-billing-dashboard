@@ -5,17 +5,43 @@
         <div class="w3-col m6 w3-padding-small">
           <mat-card class="mat-elevation-z">
             <mat-card-content>
-              KPI
+              <mat-card-header class="w3-padding-small">
+                <mat-card-title class="app-text-theme-primary">Total Cost</mat-card-title>
+              </mat-card-header>
+              <!-- <h4 class="app-text-theme-primary app-text-600">Total Cost</h4> -->
+              <div class="w3-row">
+                <div class="w3-col m6">
+                  <div class="w3-small">
+                    {{ form_filters.get('duration_start').value.format('D MMM, YYYY') }} -
+                    {{ form_filters.get('duration_end').value.format('D MMM, YYYY') }}
+                  </div>
+                </div>
+                <div class="w3-col m6">
+                  <div class="w3-small">
+                    {{
+                      helper_service
+                        .moment(form_filters.get('duration_start').value)
+                        .subtract(
+                          form_filters
+                            .get('duration_end')
+                            .value.diff(form_filters.get('duration_start').value, 'days') + 1,
+                          'days'
+                        )
+                        .format('D MMM, YYYY')
+                    }}
+                    -
+                    {{
+                      helper_service
+                        .moment(form_filters.get('duration_start').value)
+                        .subtract(1, 'day')
+                        .format('D MMM, YYYY')
+                    }}
+                  </div>
+                </div>
+              </div>
             </mat-card-content>
           </mat-card>
         </div>
-        <!-- <div class="w3-col m6 w3-padding-small">
-          <mat-card class="mat-elevation-z">
-            <mat-card-content>
-              asd
-            </mat-card-content>
-          </mat-card>
-        </div> -->
 
         <div class="w3-col m12 w3-padding-small">
           <mat-card class="mat-elevation-z">
@@ -23,12 +49,16 @@
               <mat-card-title class="app-text-theme-primary">Trends</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-              asd
+              form_filters.get('duration').value = {{ form_filters.get('duration').value }} <br />
+              form_filters.get('duration_start').value = {{ form_filters.get('duration_start').value }} <br />
+              form_filters.get('duration_end').value = {{ form_filters.get('duration_end').value }} <br />
+              form_filters.get('group_by').value = {{ form_filters.get('group_by').value }} <br />
             </mat-card-content>
           </mat-card>
         </div>
       </div>
     </div>
+
     <div class="w3-col m3 w3-padding-small">
       <mat-card class="mat-elevation-z">
         <mat-card-header class="w3-padding-small">
@@ -43,36 +73,85 @@
               </mat-label>
               <mat-select formControlName="duration">
                 <mat-option value="current_month">
-                  Current Month
+                  Current month
                 </mat-option>
                 <mat-option value="last_month">
-                  Last Month
+                  Last month
                 </mat-option>
                 <mat-divider></mat-divider>
                 <mat-option value="last_30_days">
-                  Last 30 Days
+                  Last 30 days
                 </mat-option>
                 <mat-option value="last_90_days">
-                  Last 90 Days
+                  Last 90 days
                 </mat-option>
                 <mat-option value="year_to_date">
-                  Year to Date
+                  Year to date
                 </mat-option>
                 <mat-divider></mat-divider>
                 <mat-option value="custom">
-                  Custom Range
+                  Custom range
                 </mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field *ngIf="form_filters.get('duration').value === 'custom'">
               <mat-label>
                 <fa-icon [icon]="['fas', 'calendar-day']"></fa-icon>
                 &nbsp;From
               </mat-label>
-              <input matInput [matDatepicker]="duration_start_datepicker" formControlName="duration_start" />
+              <input
+                matInput
+                [matDatepicker]="duration_start_datepicker"
+                [max]="form_filters.get('duration_end').value"
+                formControlName="duration_start"
+              />
               <mat-datepicker-toggle matSuffix [for]="duration_start_datepicker"></mat-datepicker-toggle>
               <mat-datepicker #duration_start_datepicker></mat-datepicker>
+              <mat-error *ngIf="form_filters.get('duration_start').hasError('invalidMomentFormat')">
+                Date must be of format <b>{{ form_filters.get('duration_start').errors.requiredFormat }}</b
+                >.
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="form_filters.get('duration').value === 'custom'">
+              <mat-label>
+                <fa-icon [icon]="['fas', 'calendar-day']"></fa-icon>
+                &nbsp;To
+              </mat-label>
+              <input
+                matInput
+                [matDatepicker]="duration_end_datepicker"
+                [min]="form_filters.get('duration_start').value"
+                formControlName="duration_end"
+              />
+              <mat-datepicker-toggle matSuffix [for]="duration_end_datepicker"></mat-datepicker-toggle>
+              <mat-datepicker #duration_end_datepicker></mat-datepicker>
+              <mat-error *ngIf="form_filters.get('duration_end').hasError('invalidMomentFormat')">
+                Date must be of format <b>{{ form_filters.get('duration_end').errors.requiredFormat }}</b
+                >.
+              </mat-error>
+            </mat-form-field>
+
+            <mat-divider></mat-divider>
+
+            <mat-form-field class="w3-margin-top">
+              <mat-label>
+                <fa-icon [icon]="['fas', 'object-group']"></fa-icon>
+                &nbsp;Group By
+              </mat-label>
+              <mat-select formControlName="group_by">
+                <mat-option value="product">
+                  Product
+                </mat-option>
+                <mat-option value="sub_product">
+                  Sub-product
+                </mat-option>
+                <mat-divider></mat-divider>
+                <mat-option value="no_grouping">
+                  No grouping (show total cost only)
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </form>
         </mat-card-content>
