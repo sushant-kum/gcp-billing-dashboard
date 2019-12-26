@@ -12,9 +12,12 @@ import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 import { HeaderService } from 'src/app/services/header/header.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { HelperService } from 'src/app/services/helper/helper.service';
+import { HttpTransactionsService } from 'src/app/services/http-transactions/http-transactions.service';
 
 /* Config Imports */
 import { Config } from 'src/app/configs/config';
+import { ApiResponse } from 'src/app/interfaces/api-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export const DATE_PICKER_FORMATS = {
   parse: {
@@ -29,6 +32,17 @@ export const DATE_PICKER_FORMATS = {
 };
 
 const PAGE_ID = 'server-costs-reports';
+
+interface KPIData {
+  currency: string;
+  current_duration_cost: number;
+  previous_duration_cost: number;
+  change_percentage: number;
+}
+
+// interface GraphData {
+
+// }
 
 @Component({
   selector: 'app-server-costs-reports',
@@ -57,10 +71,20 @@ export class ServerCostsReportsComponent implements OnInit {
     group_by: new FormControl('product', [Validators.required])
   });
 
+  kpi_data: KPIData = {
+    currency: null,
+    current_duration_cost: null,
+    previous_duration_cost: null,
+    change_percentage: null
+  };
+
+  graph_data = null;
+
   constructor(
     private _title: Title,
     private _header_service: HeaderService,
     private _validator_service: ValidatorService,
+    private _http_service: HttpTransactionsService,
     public helper_service: HelperService,
     public sidebar: SidebarComponent
   ) {}
@@ -76,21 +100,10 @@ export class ServerCostsReportsComponent implements OnInit {
     this.sidebar.activate();
     this.sidebar.colorize(this.config.page_map[this._page_id].identifier);
 
-    this.form_filters.get('duration').valueChanges.subscribe(() => {
-      this.fetchTrendsData();
-    });
-    this.form_filters.get('duration_start').valueChanges.subscribe(() => {
-      this.fetchTrendsData();
-    });
-    this.form_filters.get('duration_end').valueChanges.subscribe(() => {
-      this.fetchTrendsData();
-    });
-    this.form_filters.get('group_by').valueChanges.subscribe(() => {
-      this.fetchTrendsData();
-    });
+    this.setFilters();
   }
 
-  fetchTrendsData(): void {
+  setFilters(): void {
     switch (this.form_filters.get('duration').value) {
       case 'current_month':
         this.form_filters.get('duration_start').setValue(moment().date(1));
@@ -129,5 +142,95 @@ export class ServerCostsReportsComponent implements OnInit {
         this.form_filters.get('duration_end').setValue(moment());
         break;
     }
+
+    this.fetchTrendsData();
+  }
+
+  fetchTrendsData(): void {
+    this.graph_data = null;
+    this._http_service.get_gcp_billing_entries
+      .sendRequest(
+        this.form_filters.get('duration_start').value.format('YYYY-MM-DD'),
+        this.form_filters.get('duration_end').value.format('YYYY-MM-DD')
+      )
+      .subscribe(
+        (res: ApiResponse) => {
+          this.graph_data = res.data;
+          this.fetchKPIData();
+        },
+        (err: HttpErrorResponse) => {
+          console.error(err);
+        }
+      );
+  }
+
+  fetchKPIData(): void {
+    this.kpi_data = {
+      currency: null,
+      current_duration_cost: null,
+      previous_duration_cost: null,
+      change_percentage: null
+    };
+
+    this._http_service.get_gcp_billing_entries_cost
+      .sendRequest(
+        this.form_filters.get('duration_start').value.format('YYYY-MM-DD'),
+        this.form_filters.get('duration_end').value.format('YYYY-MM-DD')
+      )
+      .subscribe(
+        (res: ApiResponse) => {
+          this.kpi_data.current_duration_cost = 0;
+          if (res.data.length > 0) {
+            this.kpi_data.currency = res.data[0].currency;
+            for (const cost_row of res.data) {
+              this.kpi_data.current_duration_cost += cost_row.cost_sum;
+            }
+            this.kpi_data.current_duration_cost = Number(this.kpi_data.current_duration_cost.toFixed(2));
+          }
+
+          this._http_service.get_gcp_billing_entries_cost
+            .sendRequest(
+              moment(this.form_filters.get('duration_start').value)
+                .subtract(
+                  this.form_filters
+                    .get('duration_end')
+                    .value.diff(this.form_filters.get('duration_start').value, 'days') + 1,
+                  'days'
+                )
+                .format('YYYY-MM-DD'),
+              moment(this.form_filters.get('duration_start').value)
+                .subtract(1, 'day')
+                .format('YYYY-MM-DD')
+            )
+            .subscribe(
+              (res_previous: ApiResponse) => {
+                this.kpi_data.previous_duration_cost = 0;
+                if (res_previous.data.length > 0) {
+                  this.kpi_data.currency = res_previous.data[0].currency;
+                  for (const cost_row of res_previous.data) {
+                    this.kpi_data.previous_duration_cost += cost_row.cost_sum;
+                  }
+                  this.kpi_data.previous_duration_cost = Number(this.kpi_data.previous_duration_cost.toFixed(2));
+                }
+
+                if (this.kpi_data.previous_duration_cost !== 0) {
+                  this.kpi_data.change_percentage = Number(
+                    (
+                      ((this.kpi_data.previous_duration_cost - this.kpi_data.current_duration_cost) /
+                        this.kpi_data.previous_duration_cost) *
+                      100
+                    ).toFixed(2)
+                  );
+                }
+              },
+              (err_previous: HttpErrorResponse) => {
+                console.error(err_previous);
+              }
+            );
+        },
+        (err: HttpErrorResponse) => {
+          console.error(err);
+        }
+      );
   }
 }

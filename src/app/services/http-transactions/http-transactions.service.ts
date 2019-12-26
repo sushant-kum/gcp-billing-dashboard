@@ -364,6 +364,80 @@ export class HttpTransactionsService {
     }
   };
 
+  get_gcp_billing_entries: API = {
+    hostname: null,
+    basepath: null,
+    path: '/gcp-billing-entries',
+    sendRequest: (startdate?: string, enddate?: string): Observable<ApiResponse> => {
+      const hostname: string =
+        this.get_gcp_billing_entries.hostname == null ? this._default_hostname : this.get_gcp_billing_entries.hostname;
+      const basepath: string =
+        this.get_gcp_billing_entries.basepath == null ? this._default_basepath : this.get_gcp_billing_entries.basepath;
+      const url: string = hostname + basepath + this.get_gcp_billing_entries.path;
+
+      const token = this._localstorage_service.get(this._localstorage_service.lsname.token);
+      const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+      let params: HttpParams;
+      let http_options = {};
+
+      if (startdate && enddate) {
+        params = new HttpParams().set('startdate', startdate).set('enddate', enddate);
+        http_options = { headers, params };
+      } else {
+        http_options = { headers };
+      }
+
+      return this._http_client.get<ApiResponse>(url, http_options).pipe(
+        map(response => {
+          if (response.token) {
+            this._set_token(response.token);
+          }
+          return response;
+        }),
+        catchError(this._errorHandler<ApiResponse>())
+      );
+    }
+  };
+
+  get_gcp_billing_entries_cost: API = {
+    hostname: null,
+    basepath: null,
+    path: '/gcp-billing-entries/cost',
+    sendRequest: (startdate?: string, enddate?: string): Observable<ApiResponse> => {
+      const hostname: string =
+        this.get_gcp_billing_entries_cost.hostname == null
+          ? this._default_hostname
+          : this.get_gcp_billing_entries_cost.hostname;
+      const basepath: string =
+        this.get_gcp_billing_entries_cost.basepath == null
+          ? this._default_basepath
+          : this.get_gcp_billing_entries_cost.basepath;
+      const url: string = hostname + basepath + this.get_gcp_billing_entries_cost.path;
+
+      const token = this._localstorage_service.get(this._localstorage_service.lsname.token);
+      const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+      let params: HttpParams;
+      let http_options = {};
+
+      if (startdate && enddate) {
+        params = new HttpParams().set('startdate', startdate).set('enddate', enddate);
+        http_options = { headers, params };
+      } else {
+        http_options = { headers };
+      }
+
+      return this._http_client.get<ApiResponse>(url, http_options).pipe(
+        map(response => {
+          if (response.token) {
+            this._set_token(response.token);
+          }
+          return response;
+        }),
+        catchError(this._errorHandler<ApiResponse>())
+      );
+    }
+  };
+
   get_3rdpartylicenses: API = {
     hostname: null,
     basepath: '',

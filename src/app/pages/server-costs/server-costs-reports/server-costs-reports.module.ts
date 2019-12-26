@@ -9,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 /* Fontawesome Imports */
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -16,7 +18,10 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import {
   faArrowsAltH as fasArrowsAltH,
   faCalendarDay as fasCalendarDay,
-  faObjectGroup as fasObjectGroup
+  faObjectGroup as fasObjectGroup,
+  faArrowUp as fasArrowUp,
+  faArrowDown as fasArrowDown,
+  faExchangeAlt as fasExchangeAlt
 } from '@fortawesome/free-solid-svg-icons';
 /* Regular Icons */
 import {} from '@fortawesome/free-regular-svg-icons';
@@ -39,6 +44,8 @@ import { ServerCostsReportsComponent } from './server-costs-reports.component';
     MatDividerModule,
     MatDatepickerModule,
     MatInputModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
 
     /* Font-awesome Impors */
     FontAwesomeModule,
@@ -51,7 +58,7 @@ import { ServerCostsReportsComponent } from './server-costs-reports.component';
 export class ServerCostsReportsModule {
   constructor(fa_icon_library: FaIconLibrary) {
     // Include solid fa icons
-    fa_icon_library.addIcons(fasArrowsAltH, fasCalendarDay, fasObjectGroup);
+    fa_icon_library.addIcons(fasArrowsAltH, fasCalendarDay, fasObjectGroup, fasArrowUp, fasArrowDown, fasExchangeAlt);
     // Include regular fa icons
     // Include brand fa icons
   }

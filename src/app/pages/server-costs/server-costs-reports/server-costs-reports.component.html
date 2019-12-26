@@ -10,14 +10,51 @@
               </mat-card-header>
               <!-- <h4 class="app-text-theme-primary app-text-600">Total Cost</h4> -->
               <div class="w3-row">
-                <div class="w3-col m6">
-                  <div class="w3-small">
-                    {{ form_filters.get('duration_start').value.format('D MMM, YYYY') }} -
-                    {{ form_filters.get('duration_end').value.format('D MMM, YYYY') }}
-                  </div>
+                <div class="w3-col m5">
+                  <ng-container *ngIf="kpi_data.current_duration_cost === null; else templateCurrentDurationCost">
+                    <mat-spinner class="loading-indicator-spinner" diameter="30" strokeWidth="3"></mat-spinner>
+                  </ng-container>
+                  <ng-template #templateCurrentDurationCost>
+                    <div class="app-text-theme-primary app-text-500">
+                      {{ kpi_data.currency }} {{ kpi_data.current_duration_cost }}
+                    </div>
+
+                    <div class="w3-small">
+                      {{ form_filters.get('duration_start').value.format('D MMM, YYYY') }} -
+                      {{ form_filters.get('duration_end').value.format('D MMM, YYYY') }}
+                    </div>
+                  </ng-template>
                 </div>
-                <div class="w3-col m6">
+                <div class="w3-col m7">
+                  <div class="app-text-theme-accent app-text-500">
+                    <ng-container *ngIf="kpi_data.change_percentage !== null; else elseTemplate">
+                      <span
+                        [ngClass]="{
+                          'app-text-theme-primary-green': kpi_data.change_percentage > 0,
+                          'app-text-theme-warn': kpi_data.change_percentage < 0,
+                          'app-text-theme-accent': kpi_data.change_percentage === 0
+                        }"
+                      >
+                        <fa-icon *ngIf="kpi_data.change_percentage > 0" [icon]="['fas', 'arrow-down']"></fa-icon>
+                        <fa-icon *ngIf="kpi_data.change_percentage < 0" [icon]="['fas', 'arrow-up']"></fa-icon>
+                        <fa-icon *ngIf="kpi_data.change_percentage === 0" [icon]="['fas', 'exchange-alt']"></fa-icon>
+                        {{
+                          kpi_data.change_percentage < 0
+                            ? kpi_data.change_percentage.toString().split('-')[1]
+                            : kpi_data.change_percentage
+                        }}%
+                      </span>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                      <span class="app-text-theme-warn">
+                        <fa-icon [icon]="['fas', 'arrow-up']"></fa-icon>
+                        -
+                      </span>
+                    </ng-template>
+                  </div>
+
                   <div class="w3-small">
+                    {{ kpi_data.currency }} {{ kpi_data.current_duration_cost - kpi_data.previous_duration_cost }} over
                     {{
                       helper_service
                         .moment(form_filters.get('duration_start').value)
@@ -49,10 +86,7 @@
               <mat-card-title class="app-text-theme-primary">Trends</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-              form_filters.get('duration').value = {{ form_filters.get('duration').value }} <br />
-              form_filters.get('duration_start').value = {{ form_filters.get('duration_start').value }} <br />
-              form_filters.get('duration_end').value = {{ form_filters.get('duration_end').value }} <br />
-              form_filters.get('group_by').value = {{ form_filters.get('group_by').value }} <br />
+              {{ helper_service.json.stringify(graph_data) }}
             </mat-card-content>
           </mat-card>
         </div>
@@ -153,6 +187,14 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+
+            <mat-divider></mat-divider>
+
+            <div class="w3-right-align">
+              <button mat-flat-button color="primary" class="w3-margin-top" (click)="setFilters()">
+                Apply
+              </button>
+            </div>
           </form>
         </mat-card-content>
       </mat-card>
