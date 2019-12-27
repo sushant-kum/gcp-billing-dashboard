@@ -78,7 +78,8 @@ export class ServerCostsReportsComponent implements OnInit {
     change_percentage: null
   };
 
-  graph_data = null;
+  trends_data = null;
+  entries_data = null;
 
   constructor(
     private _title: Title,
@@ -147,7 +148,15 @@ export class ServerCostsReportsComponent implements OnInit {
   }
 
   fetchTrendsData(): void {
-    this.graph_data = null;
+    this.trends_data = null;
+    this.entries_data = null;
+    this.kpi_data = {
+      currency: null,
+      current_duration_cost: null,
+      previous_duration_cost: null,
+      change_percentage: null
+    };
+
     this._http_service.get_gcp_billing_entries
       .sendRequest(
         this.form_filters.get('duration_start').value.format('YYYY-MM-DD'),
@@ -155,7 +164,8 @@ export class ServerCostsReportsComponent implements OnInit {
       )
       .subscribe(
         (res: ApiResponse) => {
-          this.graph_data = res.data;
+          this.trends_data = res.data;
+          this.entries_data = res.data;
           this.fetchKPIData();
         },
         (err: HttpErrorResponse) => {
