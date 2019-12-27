@@ -52,6 +52,7 @@
     "rxjs": "~6.4.0",
     "ts-md5": "^1.2.7",
     "tslib": "^1.10.0",
+    "unique-colors": "^1.0.1",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

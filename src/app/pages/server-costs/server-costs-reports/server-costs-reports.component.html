@@ -4,11 +4,10 @@
       <div class="w3-row">
         <div class="w3-col m6 w3-padding-small">
           <mat-card class="mat-elevation-z">
+            <mat-card-header class="w3-padding-small">
+              <mat-card-title class="app-text-theme-primary">Total Cost</mat-card-title>
+            </mat-card-header>
             <mat-card-content>
-              <mat-card-header class="w3-padding-small">
-                <mat-card-title class="app-text-theme-primary">Total Cost</mat-card-title>
-              </mat-card-header>
-              <!-- <h4 class="app-text-theme-primary app-text-600">Total Cost</h4> -->
               <div class="w3-row">
                 <div class="w3-col m5">
                   <ng-container *ngIf="kpi_data.current_duration_cost === null; else templateCurrentDurationCost">
@@ -110,10 +109,10 @@
             </mat-card-header>
             <mat-card-content>
               <div class="graph-container">
-                <ng-container *ngIf="trends_data === null; else templateGraphData">
+                <ng-container *ngIf="trends_data === null; else templateTrends">
                   <mat-spinner class="loading-indicator-spinner" diameter="60" strokeWidth="3"></mat-spinner>
                 </ng-container>
-                <ng-template #templateGraphData>
+                <ng-template #templateTrends>
                   {{ helper_service.json.stringify(trends_data) }}
                 </ng-template>
               </div>
@@ -134,12 +133,54 @@
               </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-              <div class="graph-container">
-                <ng-container *ngIf="entries_data === null; else templateGraphData">
+              <div class="entries-container">
+                <ng-container *ngIf="entries_data === null; else templateEntries">
                   <mat-spinner class="loading-indicator-spinner" diameter="60" strokeWidth="3"></mat-spinner>
                 </ng-container>
-                <ng-template #templateGraphData>
-                  {{ helper_service.json.stringify(entries_data) }}
+                <ng-template #templateEntries>
+                  <ng-container *ngIf="this.form_filters.get('group_by').value === 'product'">
+                    <table class="entries-table" mat-table [dataSource]="entries_data">
+                      <!-- graph_color_hex Column -->
+                      <ng-container matColumnDef="graph_color_hex">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let data_row">
+                          <fa-icon [icon]="['fas', 'circle']" [style.color]="data_row.graph_color_hex"></fa-icon>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+
+                      <!-- product Column -->
+                      <ng-container matColumnDef="product">
+                        <th mat-header-cell *matHeaderCellDef>Product</th>
+                        <td mat-cell *matCellDef="let data_row">{{ data_row.product }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+
+                      <!-- usage Column -->
+                      <!-- <ng-container matColumnDef="usage">
+                        <th mat-header-cell *matHeaderCellDef>Usage</th>
+                        <td mat-cell *matCellDef="let data_row">
+                          {{ human_readable_units_service.format(data_row.usage.amount, data_row.usage.unit) }}
+                        </td>
+                      </ng-container> -->
+
+                      <!-- cost Column -->
+                      <ng-container matColumnDef="cost">
+                        <th mat-header-cell *matHeaderCellDef>Amount</th>
+                        <td mat-cell *matCellDef="let data_row">
+                          {{ data_row.cost.currency }} {{ data_row.cost.amount.toFixed(2) }}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="w3-right-align app-text-500">
+                          Total<br />
+                          {{ entries_data[0].cost.currency }} {{ getTotalEntriesCost().toFixed(2) }}
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="entries_columns.product; sticky: true"></tr>
+                      <tr mat-row *matRowDef="let row; columns: entries_columns.product"></tr>
+                      <tr mat-footer-row *matFooterRowDef="entries_columns.product; sticky: true"></tr>
+                    </table>
+                  </ng-container>
                 </ng-template>
               </div>
             </mat-card-content>

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as moment from 'moment';
+import * as uniqueColors from 'unique-colors';
 
 /* Component Imports */
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
@@ -13,11 +15,11 @@ import { HeaderService } from 'src/app/services/header/header.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { HelperService } from 'src/app/services/helper/helper.service';
 import { HttpTransactionsService } from 'src/app/services/http-transactions/http-transactions.service';
+import { HumanReadableUnitsService } from 'src/app/services/human-readable-units/human-readable-units.service';
 
 /* Config Imports */
 import { Config } from 'src/app/configs/config';
 import { ApiResponse } from 'src/app/interfaces/api-response';
-import { HttpErrorResponse } from '@angular/common/http';
 
 export const DATE_PICKER_FORMATS = {
   parse: {
@@ -40,9 +42,19 @@ interface KPIData {
   change_percentage: number;
 }
 
-// interface GraphData {
-
-// }
+interface EntryDataRow {
+  graph_color_hex?: string;
+  product: string;
+  sub_product?: string;
+  cost: {
+    amount: number;
+    currency: string;
+  };
+  usage?: {
+    amount: number;
+    unit: string;
+  };
+}
 
 @Component({
   selector: 'app-server-costs-reports',
@@ -79,13 +91,18 @@ export class ServerCostsReportsComponent implements OnInit {
   };
 
   trends_data = null;
-  entries_data = null;
+  entries_data: EntryDataRow[] = null;
+
+  entries_columns = {
+    product: ['graph_color_hex', 'product', 'cost']
+  };
 
   constructor(
     private _title: Title,
     private _header_service: HeaderService,
     private _validator_service: ValidatorService,
     private _http_service: HttpTransactionsService,
+    public human_readable_units_service: HumanReadableUnitsService,
     public helper_service: HelperService,
     public sidebar: SidebarComponent
   ) {}
@@ -164,8 +181,39 @@ export class ServerCostsReportsComponent implements OnInit {
       )
       .subscribe(
         (res: ApiResponse) => {
-          this.trends_data = res.data;
-          this.entries_data = res.data;
+          this.trends_data = [];
+          this.entries_data = [];
+
+          for (const res_row of res.data) {
+            let flag_row_identifier_found = false;
+            if (this.form_filters.get('group_by').value === 'product') {
+              for (const entry_data_row of this.entries_data) {
+                if (entry_data_row.product === res_row.service_description) {
+                  entry_data_row.cost.amount += res_row.cost_sum;
+                  flag_row_identifier_found = true;
+                  break;
+                }
+              }
+              if (!flag_row_identifier_found) {
+                this.entries_data.push({
+                  product: res_row.service_description,
+                  cost: {
+                    amount: res_row.cost_sum,
+                    currency: res_row.currency
+                  }
+                });
+              }
+            } else if (this.form_filters.get('group_by').value === 'sub_product') {
+            } else {
+            }
+          }
+
+          const colors = uniqueColors.unique_colors(this.entries_data.length);
+
+          for (const entry_data_row of this.entries_data) {
+            entry_data_row.graph_color_hex = colors[this.entries_data.indexOf(entry_data_row)];
+          }
+
           this.fetchKPIData();
         },
         (err: HttpErrorResponse) => {
@@ -242,5 +290,15 @@ export class ServerCostsReportsComponent implements OnInit {
           console.error(err);
         }
       );
+  }
+
+  getTotalEntriesCost(): number{
+    let total_cost = 0;
+
+    for (const entry_row of this.entries_data) {
+      total_cost+=entry_row.cost.amount;
+    }
+
+    return total_cost;
   }
 }
