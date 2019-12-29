@@ -34,6 +34,7 @@ import {} from '@fortawesome/free-brands-svg-icons';
 
 import { ServerCostsReportsRoutingModule } from './server-costs-reports-routing.module';
 import { ServerCostsReportsComponent } from './server-costs-reports.component';
+import { GraphStackedAreaModule } from 'src/app/components/graph-stacked-area/graph-stacked-area.module';
 
 @NgModule({
   declarations: [ServerCostsReportsComponent],
@@ -59,7 +60,8 @@ import { ServerCostsReportsComponent } from './server-costs-reports.component';
 
     /* Other Imports */
     CommonModule,
-    ServerCostsReportsRoutingModule
+    ServerCostsReportsRoutingModule,
+    GraphStackedAreaModule
   ]
 })
 export class ServerCostsReportsModule {

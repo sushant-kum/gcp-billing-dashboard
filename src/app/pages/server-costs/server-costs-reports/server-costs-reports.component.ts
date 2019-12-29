@@ -210,7 +210,7 @@ export class ServerCostsReportsComponent implements OnInit {
       )
       .subscribe(
         (res: ApiResponse) => {
-          this.trends_data = [];
+          this.trends_data = [{}];
           this.entries_data = [];
 
           if (this.form_values.group_by === 'product') {
