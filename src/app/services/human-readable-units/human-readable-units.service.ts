@@ -80,8 +80,9 @@ export class HumanReadableUnitsService {
         return this.time(value, unit as UnitsTime);
       } else if (Object.keys(UnitsStorageTime).includes(unit.toString())) {
         return this.storage_time(value, unit as UnitsStorageTime);
+      } else {
+        return `${humanFormat(value)} ${unit}`;
       }
-      throw new Error('unit must be of type UnitsStorage | UnitsTime | UnitsStorageTime');
     } else {
       return humanFormat(value);
     }

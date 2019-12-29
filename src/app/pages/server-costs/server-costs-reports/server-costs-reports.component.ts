@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import * as moment from 'moment';
+import { Sort } from '@angular/material/sort';
+import { MatTable } from '@angular/material/table';
+
+import moment from 'moment';
 import * as uniqueColors from 'unique-colors';
 
 /* Component Imports */
@@ -71,6 +74,9 @@ interface EntryDataRow {
   ]
 })
 export class ServerCostsReportsComponent implements OnInit {
+  @ViewChild('tableProduct', { static: false }) tableProduct: MatTable<Element>;
+  @ViewChild('tableSubProduct', { static: false }) tableSubProduct: MatTable<Element>;
+
   private _page_id = PAGE_ID;
   config: Config = new Config();
 
@@ -83,6 +89,16 @@ export class ServerCostsReportsComponent implements OnInit {
     group_by: new FormControl('product', [Validators.required])
   });
 
+  form_values: {
+    duration_start: moment.Moment;
+    duration_end: moment.Moment;
+    group_by: 'product' | 'sub_product' | 'no_grouping';
+  } = {
+    duration_start: null,
+    duration_end: null,
+    group_by: null
+  };
+
   kpi_data: KPIData = {
     currency: null,
     current_duration_cost: null,
@@ -94,7 +110,8 @@ export class ServerCostsReportsComponent implements OnInit {
   entries_data: EntryDataRow[] = null;
 
   entries_columns = {
-    product: ['graph_color_hex', 'product', 'cost']
+    product: ['graph_color_hex', 'product', 'cost'],
+    sub_product: ['graph_color_hex', 'sub_product', 'product', 'usage', 'cost']
   };
 
   constructor(
@@ -126,6 +143,8 @@ export class ServerCostsReportsComponent implements OnInit {
       case 'current_month':
         this.form_filters.get('duration_start').setValue(moment().date(1));
         this.form_filters.get('duration_end').setValue(moment().date(moment().daysInMonth()));
+        this.form_values.duration_start = moment(this.form_filters.get('duration_start').value);
+        this.form_values.duration_end = moment(this.form_filters.get('duration_end').value);
         break;
       case 'last_month':
         this.form_filters.get('duration_start').setValue(
@@ -142,14 +161,20 @@ export class ServerCostsReportsComponent implements OnInit {
                 .daysInMonth()
             )
         );
+        this.form_values.duration_start = moment(this.form_filters.get('duration_start').value);
+        this.form_values.duration_end = moment(this.form_filters.get('duration_end').value);
         break;
       case 'last_30_days':
         this.form_filters.get('duration_start').setValue(moment().subtract(30, 'days'));
         this.form_filters.get('duration_end').setValue(moment());
+        this.form_values.duration_start = moment(this.form_filters.get('duration_start').value);
+        this.form_values.duration_end = moment(this.form_filters.get('duration_end').value);
         break;
       case 'last_90_days':
         this.form_filters.get('duration_start').setValue(moment().subtract(90, 'days'));
         this.form_filters.get('duration_end').setValue(moment());
+        this.form_values.duration_start = moment(this.form_filters.get('duration_start').value);
+        this.form_values.duration_end = moment(this.form_filters.get('duration_end').value);
         break;
       case 'year_to_date':
         this.form_filters.get('duration_start').setValue(
@@ -158,8 +183,12 @@ export class ServerCostsReportsComponent implements OnInit {
             .date(1)
         );
         this.form_filters.get('duration_end').setValue(moment());
+        this.form_values.duration_start = moment(this.form_filters.get('duration_start').value);
+        this.form_values.duration_end = moment(this.form_filters.get('duration_end').value);
         break;
     }
+
+    this.form_values.group_by = this.form_filters.get('group_by').value;
 
     this.fetchTrendsData();
   }
@@ -176,17 +205,17 @@ export class ServerCostsReportsComponent implements OnInit {
 
     this._http_service.get_gcp_billing_entries
       .sendRequest(
-        this.form_filters.get('duration_start').value.format('YYYY-MM-DD'),
-        this.form_filters.get('duration_end').value.format('YYYY-MM-DD')
+        this.form_values.duration_start.format('YYYY-MM-DD'),
+        this.form_values.duration_end.format('YYYY-MM-DD')
       )
       .subscribe(
         (res: ApiResponse) => {
           this.trends_data = [];
           this.entries_data = [];
 
-          for (const res_row of res.data) {
-            let flag_row_identifier_found = false;
-            if (this.form_filters.get('group_by').value === 'product') {
+          if (this.form_values.group_by === 'product') {
+            for (const res_row of res.data) {
+              let flag_row_identifier_found = false;
               for (const entry_data_row of this.entries_data) {
                 if (entry_data_row.product === res_row.service_description) {
                   entry_data_row.cost.amount += res_row.cost_sum;
@@ -203,10 +232,55 @@ export class ServerCostsReportsComponent implements OnInit {
                   }
                 });
               }
-            } else if (this.form_filters.get('group_by').value === 'sub_product') {
-            } else {
+            }
+          } else if (this.form_values.group_by === 'sub_product') {
+            for (const res_row of res.data) {
+              let flag_row_identifier_found = false;
+              for (const entry_data_row of this.entries_data) {
+                if (entry_data_row.sub_product === res_row.sku_description) {
+                  entry_data_row.usage.amount += res_row.usage_amount;
+                  entry_data_row.cost.amount += res_row.cost_sum;
+                  flag_row_identifier_found = true;
+                  break;
+                }
+              }
+              if (!flag_row_identifier_found) {
+                this.entries_data.push({
+                  sub_product: res_row.sku_description,
+                  product: res_row.service_description,
+                  usage: {
+                    amount: res_row.usage_amount,
+                    unit: res_row.usage_unit
+                  },
+                  cost: {
+                    amount: res_row.cost_sum,
+                    currency: res_row.currency
+                  }
+                });
+              }
+            }
+          } else {
+            this.entries_data.push({
+              product: 'Total Cost',
+              cost: {
+                amount: 0,
+                currency: res.data[0].currency
+              }
+            });
+
+            for (const res_row of res.data) {
+              this.entries_data[0].cost.amount += res_row.cost_sum;
             }
           }
+
+          this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+            if (a.cost.amount > b.cost.amount) {
+              return -1;
+            } else if (a.cost.amount < b.cost.amount) {
+              return 1;
+            }
+            return 0;
+          });
 
           const colors = uniqueColors.unique_colors(this.entries_data.length);
 
@@ -232,8 +306,8 @@ export class ServerCostsReportsComponent implements OnInit {
 
     this._http_service.get_gcp_billing_entries_cost
       .sendRequest(
-        this.form_filters.get('duration_start').value.format('YYYY-MM-DD'),
-        this.form_filters.get('duration_end').value.format('YYYY-MM-DD')
+        this.form_values.duration_start.format('YYYY-MM-DD'),
+        this.form_values.duration_end.format('YYYY-MM-DD')
       )
       .subscribe(
         (res: ApiResponse) => {
@@ -248,15 +322,10 @@ export class ServerCostsReportsComponent implements OnInit {
 
           this._http_service.get_gcp_billing_entries_cost
             .sendRequest(
-              moment(this.form_filters.get('duration_start').value)
-                .subtract(
-                  this.form_filters
-                    .get('duration_end')
-                    .value.diff(this.form_filters.get('duration_start').value, 'days') + 1,
-                  'days'
-                )
+              moment(this.form_values.duration_start)
+                .subtract(this.form_values.duration_end.diff(this.form_values.duration_start, 'days') + 1, 'days')
                 .format('YYYY-MM-DD'),
-              moment(this.form_filters.get('duration_start').value)
+              moment(this.form_values.duration_start)
                 .subtract(1, 'day')
                 .format('YYYY-MM-DD')
             )
@@ -292,11 +361,81 @@ export class ServerCostsReportsComponent implements OnInit {
       );
   }
 
-  getTotalEntriesCost(): number{
+  sortEntriesTableHandler(sort: Sort): void {
+    if (!sort.active || sort.direction === '') {
+      this.sortEntriesData('cost', 'desc');
+    } else {
+      this.sortEntriesData(sort.active, sort.direction);
+    }
+
+    switch (this.form_values.group_by) {
+      case 'product':
+        this.tableProduct.renderRows();
+        break;
+      case 'sub_product':
+        this.tableSubProduct.renderRows();
+        break;
+      case 'no_grouping':
+        break;
+      default:
+        this.tableProduct.renderRows();
+        break;
+    }
+  }
+
+  sortEntriesData(field: string, order: 'asc' | 'desc'): void {
+    switch (field) {
+      case 'product':
+        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+          if (a.product > b.product) {
+            return order === 'asc' ? 1 : -1;
+          } else if (a.product < b.product) {
+            return order === 'asc' ? -1 : 1;
+          }
+          return 0;
+        });
+        break;
+      case 'sub_product':
+        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+          if (a.sub_product > b.sub_product) {
+            return order === 'asc' ? 1 : -1;
+          } else if (a.sub_product < b.sub_product) {
+            return order === 'asc' ? -1 : 1;
+          }
+          return 0;
+        });
+        break;
+      case 'usage':
+        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+          if (a.usage.amount > b.usage.amount) {
+            return order === 'asc' ? 1 : -1;
+          } else if (a.usage.amount < b.usage.amount) {
+            return order === 'asc' ? -1 : 1;
+          }
+          return 0;
+        });
+        break;
+      case 'cost':
+        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+          if (a.cost.amount > b.cost.amount) {
+            return order === 'asc' ? 1 : -1;
+          } else if (a.cost.amount < b.cost.amount) {
+            return order === 'asc' ? -1 : 1;
+          }
+          return 0;
+        });
+        break;
+      default:
+        this.sortEntriesData('cost', 'desc');
+        break;
+    }
+  }
+
+  getTotalEntriesCost(): number {
     let total_cost = 0;
 
     for (const entry_row of this.entries_data) {
-      total_cost+=entry_row.cost.amount;
+      total_cost += entry_row.cost.amount;
     }
 
     return total_cost;

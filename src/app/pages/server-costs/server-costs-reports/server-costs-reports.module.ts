@@ -12,6 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 /* Fontawesome Imports */
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -49,6 +51,8 @@ import { ServerCostsReportsComponent } from './server-costs-reports.component';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatTableModule,
+    MatSortModule,
+    MatTooltipModule,
 
     /* Font-awesome Impors */
     FontAwesomeModule,
