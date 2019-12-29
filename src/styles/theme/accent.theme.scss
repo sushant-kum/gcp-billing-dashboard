@@ -1,65 +1,65 @@
 .app-theme-accent-l5 {
-  color: map-deep-get($mat-palette-accent, 'contrast', 50) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 50);
   background-color: map-get($mat-palette-accent, 50) !important;
 }
 
 .app-theme-accent-l4 {
-  color: map-deep-get($mat-palette-accent, 'contrast', 100) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 100);
   background-color: map-get($mat-palette-accent, 100) !important;
 }
 
 .app-theme-accent-l3 {
-  color: map-deep-get($mat-palette-accent, 'contrast', 200) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 200);
   background-color: map-get($mat-palette-accent, 200) !important;
 }
 
 .app-theme-accent-l2 {
-  color: map-deep-get($mat-palette-accent, 'contrast', 300) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 300);
   background-color: map-get($mat-palette-accent, 300) !important;
 }
 
 .app-theme-accent-l1 {
-  color: map-deep-get($mat-palette-accent, 'contrast', 400) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 400);
   background-color: map-get($mat-palette-accent, 400) !important;
 }
 
 .app-theme-accent-d1 {
-  color: map-deep-get($mat-palette-accent, 'contrast', 600) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 600);
   background-color: map-get($mat-palette-accent, 600) !important;
 }
 
 .app-theme-accent-d2 {
-  color: map-deep-get($mat-palette-accent, 'contrast', 700) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 700);
   background-color: map-get($mat-palette-accent, 700) !important;
 }
 
 .app-theme-accent-d3 {
-  color: map-deep-get($mat-palette-accent, 'contrast', 800) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 800);
   background-color: map-get($mat-palette-accent, 800) !important;
 }
 
 .app-theme-accent-d4 {
-  color: map-deep-get($mat-palette-accent, 'contrast', 900) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 900);
   background-color: map-get($mat-palette-accent, 900) !important;
 }
 
 .app-theme-accent-light {
-  color: map-deep-get($mat-palette-accent, 'contrast', 50) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 50);
   background-color: map-get($mat-palette-accent, 50) !important;
 }
 
 .app-theme-accent-dark {
-  color: map-deep-get($mat-palette-accent, 'contrast', 900) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 900);
   background-color: map-get($mat-palette-accent, 900) !important;
 }
 
 .app-theme-accent-action {
-  color: map-deep-get($mat-palette-accent, 'contrast', 900) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 900);
   background-color: map-get($mat-palette-accent, 900) !important;
 }
 
 .app-theme-accent {
-  color: map-deep-get($mat-palette-accent, 'contrast', 500) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 500);
   background-color: map-get($mat-palette-accent, 500) !important;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .app-hover-theme-accent:hover {
-  color: map-deep-get($mat-palette-accent, 'contrast', 500) !important;
+  color: map-deep-get($mat-palette-accent, 'contrast', 500);
   background-color: map-get($mat-palette-accent, 500) !important;
 }
 
