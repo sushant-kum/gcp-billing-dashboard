@@ -24,6 +24,9 @@ import { HumanReadableUnitsService } from 'src/app/services/human-readable-units
 import { Config } from 'src/app/configs/config';
 import { ApiResponse } from 'src/app/interfaces/api-response';
 
+import { GraphStackedAreaDataModel } from 'src/app/interfaces/graph-stacked-area-data-model';
+import { GraphAxis } from 'src/app/data-models/graph-axis/graph-axis';
+
 export const DATE_PICKER_FORMATS = {
   parse: {
     dateInput: 'DD MMM, YYYY'
@@ -106,12 +109,23 @@ export class ServerCostsReportsComponent implements OnInit {
     change_percentage: null
   };
 
-  trends_data = null;
+  trends_data: GraphStackedAreaDataModel[] = null;
   entries_data: EntryDataRow[] = null;
 
   entries_columns = {
     product: ['graph_color_hex', 'product', 'cost'],
     sub_product: ['graph_color_hex', 'sub_product', 'product', 'usage', 'cost']
+  };
+
+  trends_graph_options: {
+    axis: GraphAxis;
+  } = {
+    axis: new GraphAxis(
+      {
+        type: 'timeseries'
+      },
+      {}
+    )
   };
 
   constructor(
@@ -186,6 +200,10 @@ export class ServerCostsReportsComponent implements OnInit {
         this.form_values.duration_start = moment(this.form_filters.get('duration_start').value);
         this.form_values.duration_end = moment(this.form_filters.get('duration_end').value);
         break;
+      default:
+        this.form_values.duration_start = moment(this.form_filters.get('duration_start').value);
+        this.form_values.duration_end = moment(this.form_filters.get('duration_end').value);
+        break;
     }
 
     this.form_values.group_by = this.form_filters.get('group_by').value;
@@ -210,10 +228,30 @@ export class ServerCostsReportsComponent implements OnInit {
       )
       .subscribe(
         (res: ApiResponse) => {
-          this.trends_data = [{}];
+          this.trends_data = [];
           this.entries_data = [];
 
           if (this.form_values.group_by === 'product') {
+            for (const res_row of res.data) {
+              let flag_row_identifier_found = false;
+              for (const trend_data_row of this.trends_data) {
+                if (trend_data_row.key === res_row.service_description && trend_data_row.plot.x === res_row.cost_date) {
+                  trend_data_row.plot.y += res_row.cost_sum;
+                  flag_row_identifier_found = true;
+                  break;
+                }
+              }
+              if (!flag_row_identifier_found) {
+                this.trends_data.push({
+                  key: res_row.service_description,
+                  plot: {
+                    x: res_row.cost_date,
+                    y: res_row.cost_sum
+                  }
+                });
+              }
+            }
+
             for (const res_row of res.data) {
               let flag_row_identifier_found = false;
               for (const entry_data_row of this.entries_data) {
@@ -234,6 +272,26 @@ export class ServerCostsReportsComponent implements OnInit {
               }
             }
           } else if (this.form_values.group_by === 'sub_product') {
+            for (const res_row of res.data) {
+              let flag_row_identifier_found = false;
+              for (const trend_data_row of this.trends_data) {
+                if (trend_data_row.key === res_row.sku_description && trend_data_row.plot.x === res_row.cost_date) {
+                  trend_data_row.plot.y += res_row.cost_sum;
+                  flag_row_identifier_found = true;
+                  break;
+                }
+              }
+              if (!flag_row_identifier_found) {
+                this.trends_data.push({
+                  key: res_row.sku_description,
+                  plot: {
+                    x: res_row.cost_date,
+                    y: res_row.cost_sum
+                  }
+                });
+              }
+            }
+
             for (const res_row of res.data) {
               let flag_row_identifier_found = false;
               for (const entry_data_row of this.entries_data) {
@@ -260,6 +318,26 @@ export class ServerCostsReportsComponent implements OnInit {
               }
             }
           } else {
+            for (const res_row of res.data) {
+              let flag_row_identifier_found = false;
+              for (const trend_data_row of this.trends_data) {
+                if (trend_data_row.plot.x === res_row.cost_date) {
+                  trend_data_row.plot.y += res_row.cost_sum;
+                  flag_row_identifier_found = true;
+                  break;
+                }
+              }
+              if (!flag_row_identifier_found) {
+                this.trends_data.push({
+                  key: 'Total Cost',
+                  plot: {
+                    x: res_row.cost_date,
+                    y: res_row.cost_sum
+                  }
+                });
+              }
+            }
+
             this.entries_data.push({
               product: 'Total Cost',
               cost: {
@@ -273,7 +351,16 @@ export class ServerCostsReportsComponent implements OnInit {
             }
           }
 
-          this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+          this.trends_data.sort((a: GraphStackedAreaDataModel, b: GraphStackedAreaDataModel): 1 | -1 | 0 => {
+            if (moment(a.plot.x, 'YYYY-MM-DD').isBefore(moment(b.plot.x, 'YYYY-MM-DD'))) {
+              return -1;
+            } else if (moment(a.plot.x, 'YYYY-MM-DD').isAfter(moment(b.plot.x, 'YYYY-MM-DD'))) {
+              return 1;
+            }
+            return 0;
+          });
+
+          this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): 1 | -1 | 0 => {
             if (a.cost.amount > b.cost.amount) {
               return -1;
             } else if (a.cost.amount < b.cost.amount) {
@@ -286,7 +373,30 @@ export class ServerCostsReportsComponent implements OnInit {
 
           for (const entry_data_row of this.entries_data) {
             entry_data_row.graph_color_hex = colors[this.entries_data.indexOf(entry_data_row)];
+
+            for (const trend_data_row of this.trends_data) {
+              if (
+                (this.form_values.group_by === 'sub_product' && entry_data_row.sub_product === trend_data_row.key) ||
+                (this.form_values.group_by !== 'sub_product' && entry_data_row.product === trend_data_row.key)
+              ) {
+                trend_data_row.color_hex = entry_data_row.graph_color_hex;
+              }
+            }
           }
+
+          this.trends_graph_options.axis.x.min = this.form_values.duration_start.format('YYYY-MM-DD');
+          this.trends_graph_options.axis.x.max = this.form_values.duration_end.format('YYYY-MM-DD');
+          switch (this.form_values.group_by) {
+            case 'product':
+              this.trends_graph_options.axis.x.label.text = 'Product';
+              break;
+            case 'sub_product':
+              this.trends_graph_options.axis.x.label.text = 'Sub-Product';
+              break;
+            default:
+              this.trends_graph_options.axis.x.label.text = undefined;
+          }
+          this.trends_graph_options.axis.y.label.text = `Cost (${this.entries_data[0].cost.currency})`;
 
           this.fetchKPIData();
         },
@@ -386,7 +496,7 @@ export class ServerCostsReportsComponent implements OnInit {
   sortEntriesData(field: string, order: 'asc' | 'desc'): void {
     switch (field) {
       case 'product':
-        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): 1 | -1 | 0 => {
           if (a.product > b.product) {
             return order === 'asc' ? 1 : -1;
           } else if (a.product < b.product) {
@@ -396,7 +506,7 @@ export class ServerCostsReportsComponent implements OnInit {
         });
         break;
       case 'sub_product':
-        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): 1 | -1 | 0 => {
           if (a.sub_product > b.sub_product) {
             return order === 'asc' ? 1 : -1;
           } else if (a.sub_product < b.sub_product) {
@@ -406,7 +516,7 @@ export class ServerCostsReportsComponent implements OnInit {
         });
         break;
       case 'usage':
-        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): 1 | -1 | 0 => {
           if (a.usage.amount > b.usage.amount) {
             return order === 'asc' ? 1 : -1;
           } else if (a.usage.amount < b.usage.amount) {
@@ -416,7 +526,7 @@ export class ServerCostsReportsComponent implements OnInit {
         });
         break;
       case 'cost':
-        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): number => {
+        this.entries_data.sort((a: EntryDataRow, b: EntryDataRow): 1 | -1 | 0 => {
           if (a.cost.amount > b.cost.amount) {
             return order === 'asc' ? 1 : -1;
           } else if (a.cost.amount < b.cost.amount) {

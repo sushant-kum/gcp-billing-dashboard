@@ -117,8 +117,8 @@
                   </ng-template>
                 </ng-container>
                 <ng-template #templateTrends>
-                  {{ helper_service.json.stringify(trends_data) }}
-                  <graph-stacked-area></graph-stacked-area>
+                  <!-- {{ helper_service.json.stringify(trends_data) }} -->
+                  <graph-stacked-area [data]="trends_data" [axis]="trends_graph_options.axis" style="width: 100%;"></graph-stacked-area>
                 </ng-template>
               </div>
             </mat-card-content>

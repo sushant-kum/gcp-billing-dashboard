@@ -1,1 +1,6 @@
-<p>graph-stacked-area works!</p>
+<div class="w3-hide" [ngClass]="{ 'w3-show': data !== undefined && data.length > 0 }">
+  <div #chart id="chart"></div>
+</div>
+<div class="w3-hide" [ngClass]="{ 'w3-show': data === undefined || data.length === 0 }">
+  <graph-no-data></graph-no-data>
+</div>
