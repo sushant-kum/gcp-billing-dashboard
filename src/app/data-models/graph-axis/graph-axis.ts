@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import moment from 'moment';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export interface GraphAxisXOption {
   type?: 'timeseries' | 'indexed';
@@ -58,20 +59,31 @@ export class GraphAxis {
       x = d3.scaleLinear().range([0, graph_width]);
     }
 
-    if (this.x.min !== undefined || this.x.min !== undefined) {
-      if (this.x.type === 'timeseries') {
-        x.domain([moment(this.x.min, 'YYYY-MM-DD').toDate(), moment(this.x.max, 'YYYY-MM-DD').toDate()]);
-      } else if (this.x.type === 'indexed') {
-        x.domain([this.x.min as number, this.x.max as number]);
-      }
-    } else {
-      if (this.x.type === 'timeseries') {
-        x.domain(domain);
-      } else if (this.x.type === 'indexed') {
-        x.domain(domain);
-      }
-    }
+    x.domain(this.getXAxisDomain(domain));
     return x;
+  }
+
+  getXAxisDomain(domain: (Date | number | { valueOf(): number })[]): (Date | number | { valueOf(): number })[] {
+    if (this.x.min !== undefined || this.x.min !== undefined) {
+      const computed_domain: (Date | number | { valueOf(): number })[] = [undefined, undefined];
+      if (this.x.min !== undefined) {
+        if (this.x.type === 'timeseries') {
+          computed_domain[0] = moment(this.x.min, 'YYYY-MM-DD').toDate();
+        } else {
+          computed_domain[0] = domain[0];
+        }
+      }
+      if (this.x.max !== undefined) {
+        if (this.x.type === 'timeseries') {
+          computed_domain[1] = moment(this.x.max, 'YYYY-MM-DD').toDate();
+        } else {
+          computed_domain[1] = domain[1];
+        }
+      }
+      return computed_domain;
+    } else {
+      return domain;
+    }
   }
 
   getYAxis(
