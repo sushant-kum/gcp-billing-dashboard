@@ -43,7 +43,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "git-describe": "^4.0.4",
     "hammerjs": "^2.0.8",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "rgb-hex": "^3.0.0",
     "rxjs": "~6.4.0",
